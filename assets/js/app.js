@@ -561,6 +561,28 @@ document.addEventListener('DOMContentLoaded', function () {
  */
 
 (function ($) {
+  $.extend(true, $.magnificPopup.defaults, {
+    tClose: 'Закрыть (Esc)',
+    // Alt text on close button
+    tLoading: 'Загрузка...',
+    // Text that is displayed during loading. Can contain %curr% and %total% keys
+    gallery: {
+      tPrev: 'Предыдущий (Клавиша левая стрелка)',
+      // Alt text on left arrow
+      tNext: 'Следующий (Клавиша правая стрелка)',
+      // Alt text on right arrow
+      tCounter: '%curr% / %total%' // Markup for "1 of 7" counter
+
+    },
+    image: {
+      tError: '<a href="%url%">Изображение</a> не загрузилось.' // Error message when image could not be loaded
+
+    },
+    ajax: {
+      tError: '<a href="%url%">Контент</a> не загрузился.' // Error message when ajax request failed
+
+    }
+  });
   $('.js-popup-call').magnificPopup({
     removalDelay: 300,
     items: {
@@ -592,5 +614,20 @@ document.addEventListener('DOMContentLoaded', function () {
         $('body').removeClass('is-modal-open');
       }
     }
-  });
+  }); // Project images
+
+  if ($('.project-post a[href*=".jpg"], .project-post a[href*=".jpeg"], .project-post a[href*=".png"]').length) {
+    var links = $('.project-post a[href*=".jpg"], .project-post a[href*=".jpeg"], .project-post a[href*=".png"]');
+    links.magnificPopup({
+      type: 'image',
+      gallery: {
+        enabled: true
+      },
+      zoom: {
+        enabled: true,
+        duration: 300,
+        easing: 'ease-in-out'
+      }
+    });
+  }
 })(jQuery);

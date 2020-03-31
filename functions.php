@@ -49,8 +49,8 @@ remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0 ); // remove shortlink
 */
 function crave_remove_script_version( $src ) {
 	$parts = explode( '?ver', $src );
-	return $parts[0]; 
-} 
+	return $parts[0];
+}
 add_filter( 'script_loader_src', 'crave_remove_script_version', 15, 1 );
 add_filter( 'style_loader_src', 'crave_remove_script_version', 15, 1 );
 
@@ -62,9 +62,9 @@ function crave_disable_emojis() {
 	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
 	remove_action( 'wp_print_styles', 'print_emoji_styles' );
-	remove_action( 'admin_print_styles', 'print_emoji_styles' ); 
+	remove_action( 'admin_print_styles', 'print_emoji_styles' );
 	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
-	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' ); 
+	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
 	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
 	add_filter( 'tiny_mce_plugins', 'crave_disable_emojis_tinymce' );
 	add_filter( 'wp_resource_hints', 'crave_disable_emojis_remove_dns_prefetch', 10, 2 );
@@ -74,8 +74,8 @@ add_action( 'init', 'crave_disable_emojis' );
 
 /**
 * Filter function used to remove the tinymce emoji plugin.
-* 
-* @param array $plugins 
+*
+* @param array $plugins
 * @return array Difference betwen the two arrays
 */
 function crave_disable_emojis_tinymce( $plugins ) {
@@ -122,7 +122,7 @@ add_action( 'wp_default_scripts', 'crave_remove_jquery_migrate' );
  */
 function wpassist_remove_block_library_css(){
   wp_dequeue_style( 'wp-block-library' );
-} 
+}
 add_action( 'wp_enqueue_scripts', 'wpassist_remove_block_library_css' );
 
 /**
@@ -135,7 +135,10 @@ function novokno_theme_support() {
 	add_theme_support( 'post-thumbnails' );
 
 	// Set post thumbnail size.
-	// set_post_thumbnail_size( 1200, 9999 );
+  set_post_thumbnail_size( 1200, 9999 );
+  add_image_size( 'image-350x280', 350, 280, true );
+  add_image_size( 'image-350x200', 350, 200, true );
+  add_image_size( 'image-300x240', 300, 240, true );
 
 
 	/*
@@ -299,7 +302,7 @@ function register_acf_options_pages() {
 		'menu_title'	=> __('Баннер для рассрочки'),
 		'parent_slug'	=> 'theme-general-settings',
 	));
-  
+
 }
 
 add_action('acf/init', 'register_acf_options_pages');
@@ -332,7 +335,7 @@ add_filter( 'excerpt_more', 'wpdocs_excerpt_more' );
  */
 function novokno_register_post_types() {
   // Reviews
-  register_post_type('novokno-reviews', array(
+  register_post_type('reviews', array(
 		'label'  => null,
 		'labels' => array(
 			'name'               => 'Отзывы', // основное название для типа записи
@@ -359,7 +362,7 @@ function novokno_register_post_types() {
 		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
 		'rest_base'           => null, // $post_type. C WP 4.7
 		'menu_position'       => null,
-		'menu_icon'           => 'dashicons-format-status', 
+		'menu_icon'           => 'dashicons-format-status',
 		//'capability_type'   => 'post',
 		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
 		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
@@ -367,7 +370,48 @@ function novokno_register_post_types() {
 		'supports'            => array('title','thumbnail', 'editor'), // 'title','editor','author','thumbnail','excerpt','trackbacks','custom-fields','comments','revisions','page-attributes','post-formats'
 		'taxonomies'          => array(),
 		'has_archive'         => false,
-		'rewrite'             => ['slug' => 'reviews'],
+		'rewrite'             => array('slug' => 'reviews', 'with_front' => false ),
+		'query_var'           => true,
+  ) );
+
+
+  // Projects
+  register_post_type('projects', array(
+		'label'  => null,
+		'labels' => array(
+			'name'               => 'Проекты', // основное название для типа записи
+			'singular_name'      => 'Проект', // название для одной записи этого типа
+			'add_new'            => 'Добавить Проект', // для добавления новой записи
+			'add_new_item'       => 'Добавление Проекта', // заголовка у вновь создаваемой записи в админ-панели.
+			'edit_item'          => 'Редактирование Проекта', // для редактирования типа записи
+			'new_item'           => 'Новый Проект', // текст новой записи
+			'view_item'          => 'Смотреть Проект', // для просмотра записи этого типа.
+			'search_items'       => 'Искать Проект', // для поиска по этим типам записи
+			'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
+			'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
+			'parent_item_colon'  => '', // для родителей (у древовидных типов)
+			'menu_name'          => 'Проекты', // название меню
+		),
+		'description'         => '',
+		'public'              => true,
+		'publicly_queryable'  => true, // зависит от public
+		'exclude_from_search' => true, // зависит от public
+		'show_ui'             => true, // зависит от public
+		'show_in_menu'        => true, // показывать ли в меню адмнки
+		'show_in_admin_bar'   => true, // по умолчанию значение show_in_menu
+		'show_in_nav_menus'   => true, // зависит от public
+		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
+		'rest_base'           => null, // $post_type. C WP 4.7
+		'menu_position'       => null,
+		'menu_icon'           => 'dashicons-format-status',
+		//'capability_type'   => 'post',
+		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
+		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
+		'hierarchical'        => false,
+		'supports'            => array('title','thumbnail', 'editor'), // 'title','editor','author','thumbnail','excerpt','trackbacks','custom-fields','comments','revisions','page-attributes','post-formats'
+		'taxonomies'          => array(),
+		'has_archive'         => false,
+		'rewrite'             => array('slug' => 'projects', 'with_front' => false ),
 		'query_var'           => true,
   ) );
 
@@ -456,3 +500,59 @@ function novokno_archive_navigation_link( $page = false, $class = '', $label = '
 	return '	<li class="page-item"><a class="page-link ' . join ( ' ', $classes ) . '" href="' . $link . '">' . $label . '</a></li>';
 
 }
+
+
+/**
+ * Ajax loadmore
+ */
+function vh_load_more_scripts() {
+
+  global $wp_query;
+
+  // register our main script but do not enqueue it yet
+  wp_register_script('vh_loadmore', get_stylesheet_directory_uri(). '/jx/jx-loadmore.js', array('jquery'));
+
+  // we have to pass parameters to jx-loadmore.js
+  // you can define variables directly in your HTML or in wp_localize_script()
+  wp_localize_script('vh_loadmore', 'vh_loadmore_params', array(
+    'ajaxurl' => site_url() . '/wp-admin/admin-ajax.php', // WordPress AJAX
+    'posts' => json_encode($wp_query->query_vars), // everything about your loop is here
+    'current_page' => get_query_var('paged') ? get_query_var('paged') : 1,
+    'max_page' => $wp_query->max_num_pages
+  ));
+
+  wp_enqueue_script( 'vh_loadmore' );
+  wp_script_add_data( 'vh_loadmore', 'defer', true );
+}
+
+add_action('wp_enqueue_scripts', 'vh_load_more_scripts');
+
+
+function vh_loadmore_ajax_handler() {
+
+	// prepare our arguments for the query
+	$args = json_decode( stripslashes( $_POST['query'] ), true );
+	$args['paged'] = $_POST['page'] + 1; // we need next page to be loaded
+	$args['post_status'] = 'publish';
+
+	// it is always better to use WP_Query but not here
+	query_posts( $args );
+
+	if( have_posts() ) :
+
+		// run the loop
+		while( have_posts() ): the_post();
+
+			get_template_part( 'template-parts/post/card' );
+			// for the test purposes comment the line above and uncomment the below one
+			// the_title();
+
+
+		endwhile;
+
+	endif;
+	die; // here we exit the script and even no wp_reset_query() required!
+}
+
+add_action('wp_ajax_loadmore', 'vh_loadmore_ajax_handler'); // wp_ajax_{action}
+add_action('wp_ajax_nopriv_loadmore', 'vh_loadmore_ajax_handler'); // wp_ajax_nopriv_{action}

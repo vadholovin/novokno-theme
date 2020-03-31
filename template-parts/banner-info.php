@@ -18,7 +18,7 @@ if( have_rows('info_slide', 'option') ) : ?>
               </div>
               <div class="grid__col grid__col-sm-6">
                 <figure class="info-slide__picture">
-                  <img src="<?php bloginfo('template_url'); ?>/assets/img/content/corner.png" width="426" alt="">
+                  <img src="<?php the_sub_field( 'img' ); ?>" width="426" alt="">
                 </figure>
               </div>
             </div>

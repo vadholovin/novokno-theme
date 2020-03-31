@@ -1625,6 +1625,22 @@ table{
     margin-bottom:60px;
   }
 }
+.content-zone figure:not(:first-child){
+  margin-top:30px;
+}
+@media (min-width: 64em){
+  .content-zone figure:not(:first-child){
+    margin-top:60px;
+  }
+}
+.content-zone figure:not(:last-child){
+  margin-bottom:30px;
+}
+@media (min-width: 64em){
+  .content-zone figure:not(:last-child){
+    margin-bottom:60px;
+  }
+}
 .content-zone > ul:not(:last-child), .content-zone > ol:not(:last-child){
   margin-bottom:24px;
 }
@@ -3268,6 +3284,68 @@ table{
 .products .layout{
   overflow:hidden;
 }
+.project-post h1{
+  max-width:none;
+}
+.project-post img{
+  max-height:500px;
+}
+.project-post figure{
+  text-align:center;
+}
+.project-post .zoomed,
+.project-post a[href*=".jpg"],
+.project-post a[href*=".jpeg"],
+.project-post a[href*=".png"]{
+  position:relative;
+  display:inline-block;
+}
+.project-post .zoomed::before,
+.project-post a[href*=".jpg"]::before,
+.project-post a[href*=".jpeg"]::before,
+.project-post a[href*=".png"]::before{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  opacity:0;
+  background:#585CE9;
+  transition:opacity .25s ease-out;
+  z-index:1;
+}
+.project-post .zoomed:hover::before,
+.project-post a[href*=".jpg"]:hover::before,
+.project-post a[href*=".jpeg"]:hover::before,
+.project-post a[href*=".png"]:hover::before{
+  opacity:.8;
+}
+.project-post .zoomed::after,
+.project-post a[href*=".jpg"]::after,
+.project-post a[href*=".jpeg"]::after,
+.project-post a[href*=".png"]::after{
+  content:'';
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:36px;
+  height:36px;
+  transform:translate(-50%, -50%) scale(0.5);
+  color:#fff !important;
+  opacity:0;
+  background-image:url("data:image/svg+xml,%3Csvg width='36' height='36' viewBox='0 0 17 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.667 14.333A6.667 6.667 0 107.667 1a6.667 6.667 0 000 13.333zM16 16l-3.625-3.625' stroke='%23FFFFFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  transition:opacity .25s ease-out, transform .25s ease-out;
+  z-index:2;
+}
+.project-post .zoomed:hover::after,
+.project-post a[href*=".jpg"]:hover::after,
+.project-post a[href*=".jpeg"]:hover::after,
+.project-post a[href*=".png"]:hover::after{
+  opacity:1;
+  transform:translate(-50%, -50%) scale(1);
+}
 .heading{
   margin-bottom:3.5rem;
 }
@@ -4115,7 +4193,7 @@ table{
   width:100%;
   height:350px;
   overflow:hidden;
-  background:url("../img/content/map.png") no-repeat center/cover;
+  background:url("../assets/img/content/map.png") no-repeat center/cover;
 }
 @media (min-width: 64em){
   .contacts-map{
@@ -4174,7 +4252,7 @@ table{
 }
 @media (min-width: 48em){
   .info{
-    background-image:url(../img/content/ring.png);
+    background-image:url(../assets/img/content/ring.png);
     background-size:60%;
   }
 }

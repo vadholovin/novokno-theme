@@ -8,8 +8,6 @@
   <script>document.documentElement.classList.replace("no-js", "js");</script>
   <link rel="profile" href="https://gmpg.org/xfn/11">
 
-  <link href="favicon.ico" rel="shortcut icon">
-
   <?php wp_head(); ?>
 </head>
 
