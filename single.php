@@ -55,7 +55,7 @@ get_header();
     
     <?php
     // Выводит общий баннер для заявки на замер
-    get_template_part( 'template-parts/banner-application' );
+    get_template_part( 'template-parts/banner/banner-application' );
     ?>
 
   </div>

@@ -189,11 +189,36 @@
   </div>
 </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="<?php bloginfo('template_url'); ?>/assets/js/libs.min.js"></script>
-  <script src="<?php bloginfo('template_url'); ?>/assets/js/app.js"></script>
+<?php wp_footer(); ?>
 
-  <?php wp_footer(); ?>
+<?php
+if ( is_page( 'kontakty' ) ) : ?>
+<script>
+ymaps.ready(init);
+
+function init() {
+  var mapCenter = [<?php echo get_field( 'contacts_map' )['x']; ?>, <?php echo get_field( 'contacts_map' )['y']; ?>];
+  var myMap = new ymaps.Map('map', {
+    center: mapCenter,
+    zoom: 16
+  });
+  var myPlacemark = new ymaps.Placemark(mapCenter, {
+    // Свойства.
+    // Содержимое иконки, балуна и хинта.
+    // iconContent: '1',
+    // balloonContent: 'Балун',
+    // hintContent: 'Стандартный значок метки'
+  }, {
+    // Опции.
+    // Стандартная фиолетовая иконка.
+    preset: 'twirl#violetIcon'
+  });
+  myMap.geoObjects.add(myPlacemark);
+  myMap.behaviors.disable('scrollZoom');
+}
+</script>
+<?php endif; ?>
+
 </body>
 
 </html>

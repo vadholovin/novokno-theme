@@ -20,6 +20,7 @@
  * Excerpt "read more"
  * Register post types
  * Remove auto P tag in CF7
+ * Ajax loadmore
  */
 
 
@@ -192,8 +193,8 @@ function novokno_register_scripts() {
   wp_enqueue_script( 'novokno-libs-js', get_template_directory_uri() . '/assets/js/libs.min.js', array('jquery'), $theme_version, true );
   wp_script_add_data( 'novokno-libs-js', 'defer', true );
 
-  if (is_page('contacts')) {
-    // wp_enqueue_script( 'novokno-yandex-js', 'https://api-maps.yandex.ru/2.1/?apikey=7f26816b-f17f-4c3a-af56-62fff3b1a738&lang=ru_RU', array(), $theme_version, true );
+  if (is_page('kontakty')) {
+    wp_enqueue_script( 'novokno-yandex-js', 'https://api-maps.yandex.ru/2.1/?apikey=592b3f53-b8ee-4d79-9ab4-174b61acadad&lang=ru_RU', array(), $theme_version, true );
   }
 
 	wp_enqueue_script( 'novokno-js', get_template_directory_uri() . '/assets/js/app.js', array('jquery'), $theme_version, true );
@@ -273,8 +274,8 @@ function register_acf_options_pages() {
 		'parent_slug'	=> 'theme-general-settings',
 	));
   acf_add_options_sub_page(array(
-		'page_title' 	=> __('Настройки верхнего баннера'),
-		'menu_title'	=> __('Верхний баннер'),
+		'page_title' 	=> __('Настройки блока контактов'),
+		'menu_title'	=> __('Блок контактов'),
 		'parent_slug'	=> 'theme-general-settings',
 	));
   acf_add_options_sub_page(array(
@@ -427,82 +428,6 @@ add_filter('wpcf7_autop_or_not', '__return_false');
 
 
 /**
- * Archive Navigation
- */
-function novokno_archive_navigation() {
-
-	$settings = array(
-		'count' => 6,
-		'prev_text' => '&laquo;',
-		'next_text' => '&raquo;'
-	);
-
-	global $wp_query;
-	$current = max( 1, get_query_var( 'paged' ) );
-	$total = $wp_query->max_num_pages;
-	$links = array();
-
-	// Offset for next link
-	if( $current < $total )
-		$settings['count']--;
-
-	// Previous
-	if( $current > 1 ) {
-		$settings['count']--;
-		$links[] = novokno_archive_navigation_link( $current - 1, 'prev', $settings['prev_text'] );
-	}
-
-	// Current
-	$links[] = novokno_archive_navigation_link( $current, 'current' );
-
-	// Next Pages
-	for( $i = 1; $i < $settings['count']; $i++ ) {
-		$page = $current + $i;
-		if( $page <= $total ) {
-			$links[] = novokno_archive_navigation_link( $page );
-		}
-	}
-
-	// Next
-	if( $current < $total ) {
-		$links[] = novokno_archive_navigation_link( $current + 1, 'next', $settings['next_text'] );
-	}
-
-
-	echo '<nav class="navigation posts-navigation" role="navigation">';
-    echo '<ul class="pagination justify-content-center">' . join( '', $links ) . '</ul>';
-	echo '</nav>';
-}
-
-// add_action( 'the_content_while_after', 'novokno_archive_navigation' );
-
-/**
- * Archive Navigation Link
- *
- * @param int $page
- * @param string $class
- * @param string $label
- * @return string $link
- */
-function novokno_archive_navigation_link( $page = false, $class = '', $label = '' ) {
-
-	if( ! $page )
-		return;
-
-	$classes = array( 'page-numbers' );
-	if( !empty( $class ) )
-		$classes[] = $class;
-	$classes = array_map( 'sanitize_html_class', $classes );
-
-	$label = $label ? $label : $page;
-	$link = esc_url_raw( get_pagenum_link( $page ) );
-
-	return '	<li class="page-item"><a class="page-link ' . join ( ' ', $classes ) . '" href="' . $link . '">' . $label . '</a></li>';
-
-}
-
-
-/**
  * Ajax loadmore
  */
 function vh_load_more_scripts() {
@@ -543,7 +468,7 @@ function vh_loadmore_ajax_handler() {
 		// run the loop
 		while( have_posts() ): the_post();
 
-			get_template_part( 'template-parts/post/card' );
+			get_template_part( 'template-parts/post/card-article' );
 			// for the test purposes comment the line above and uncomment the below one
 			// the_title();
 

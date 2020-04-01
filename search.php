@@ -10,8 +10,15 @@ get_header();
       <section class="articles-content">
         <div class="container">
           <div class="articles__heading heading heading--center">
-            <h1 class="heading__title">Полезная информация</h1>
-            <p class="heading__subtitle">Статьи написанные компетентными специалистами из нашей сферы</p>
+            <?php if ( have_posts() ) : ?>
+            <h1 class="heading__title">
+            <?php
+            printf( 'Результаты поиска для: %s', '<i>' . get_search_query() . '</i>' );
+            ?>
+            </h1>
+            <?php else : ?>
+              <h1 class="heading__title"><?php _e( 'Ничего не найдено' ); ?></h1>
+            <?php endif; ?>
           </div>
 
           <?php
@@ -28,13 +35,6 @@ get_header();
                     <?php get_template_part( 'template-parts/post/card-article' ); ?>
                   </div>
                 <?php endwhile; ?>
-                
-                <div class="btn__container grid__col-12">
-                <?php
-                if (  $wp_query->max_num_pages > 1 ) : ?>
-                  <button class="btn btn--wider js-more-articles">Загрузить еще</button>
-                <?php endif; ?>
-                </div>
               </div>
             </div>
           <?php endif; ?>

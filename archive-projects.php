@@ -19,7 +19,8 @@ get_header();
               <div class="grid articles__grid">
               <?php
               $args = array(
-              'post_type'      => 'projects',
+                'numberposts'    => 9,
+                'post_type'      => 'projects',
               );
 
               $q = get_posts( $args ); ?>

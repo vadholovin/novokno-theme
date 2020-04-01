@@ -1112,7 +1112,7 @@ get_header();
     get_template_part( 'template-parts/nav-line' );
     
     // Выводит Инфо баннер
-    get_template_part( 'template-parts/banner-info' );
+    get_template_part( 'template-parts/banner/banner-info' );
     ?>
     
     <section class="portfolio">
@@ -1153,7 +1153,7 @@ get_header();
 
     <?php
     // Выводит баннер с рассрочкой
-    get_template_part( 'template-parts/banner-installment' );
+    get_template_part( 'template-parts/banner/banner-installment' );
     ?>
 
     <section class="articles">
@@ -1195,7 +1195,7 @@ get_header();
     
     <?php
     // Выводит общий баннер для заявки на замер
-    get_template_part( 'template-parts/banner-application' );
+    get_template_part( 'template-parts/banner/banner-application' );
     ?>
 
   </div>
