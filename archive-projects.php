@@ -11,7 +11,7 @@ get_header();
         <div class="container">
           <div class="articles__heading heading heading--center">
             <h2 class="heading__title">Проекты</h2>
-            <p class="heading__subtitle">Статьи написанные компетентными специалистами из нашей сферы</p>
+            <p class="heading__subtitle">Проекты выполненные компанией «Новые Окна»</p>
           </div>
 
 
@@ -19,28 +19,27 @@ get_header();
               <div class="grid articles__grid">
               <?php
               $args = array(
-                'numberposts'    => 9,
+                'posts_per_page' => 9,
                 'post_type'      => 'projects',
+                'paged'          => 1,
               );
 
-              $q = get_posts( $args ); ?>
+              $query = new WP_Query( $args ); ?>
               <script>
-              var posts_projects = '<?php echo serialize( $q->query_vars ) ?>',
-                  current_page_projects = <?php echo $q->query_vars['paged'] ?>,
-                  max_page_projects = <?php echo $q->max_num_pages ?>
+              var posts_projects = '<?php echo addslashes(json_encode( $query->query_vars )); ?>',
+                  current_page_projects = <?php echo $query->query_vars['paged']; ?>,
+                  max_page_projects = <?php echo $query->max_num_pages; ?>;
               </script>
               <?php
-              foreach ( $q as $post ) : setup_postdata( $post ); ?>
-                  <div class="grid__col grid__col-sm-4 grid__col-6">
-                    <?php get_template_part( 'template-parts/post/card-project' ); ?>
-                  </div>
-              <?php endforeach; ?>
+              if ($query->have_posts()) : while($query->have_posts()) : $query->the_post(); ?>
+                <?php get_template_part( 'template-parts/post/card-article' ); ?>
+              <?php endwhile; endif; ?>
 
                 <div class="btn__container grid__col-12">
                 <?php
-                if (  $wp_query->max_num_pages > 1 ) : ?>
-                  <button class="btn btn--wider js-more-articles">Загрузить еще</button>
-                <?php endif; ?>
+                if ( $query->max_num_pages > 1 ) : ?>
+                  <button class="btn btn--wider js-more-projects">Загрузить еще</button>
+                <?php endif; wp_reset_postdata(); ?>
                 </div>
               </div>
             </div>

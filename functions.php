@@ -440,7 +440,7 @@ function vh_load_more_scripts() {
   // we have to pass parameters to jx-loadmore.js
   // you can define variables directly in your HTML or in wp_localize_script()
   wp_localize_script('vh_loadmore', 'vh_loadmore_params', array(
-    'ajaxurl' => site_url() . '/wp-admin/admin-ajax.php', // WordPress AJAX
+    'ajaxurl' => admin_url( 'admin-ajax.php' ), // WordPress AJAX
     'posts' => json_encode($wp_query->query_vars), // everything about your loop is here
     'current_page' => get_query_var('paged') ? get_query_var('paged') : 1,
     'max_page' => $wp_query->max_num_pages
@@ -457,7 +457,7 @@ function vh_loadmore_ajax_handler() {
 
 	// prepare our arguments for the query
 	$args = json_decode( stripslashes( $_POST['query'] ), true );
-	$args['paged'] = $_POST['page'] + 1; // we need next page to be loaded
+	$args['paged'] = $_POST['page']; // we need next page to be loaded
 	$args['post_status'] = 'publish';
 
 	// it is always better to use WP_Query but not here
@@ -468,10 +468,11 @@ function vh_loadmore_ajax_handler() {
 		// run the loop
 		while( have_posts() ): the_post();
 
-			get_template_part( 'template-parts/post/card-article' );
+      if ( is_home() || is_page( 'projects' ) ) :
+        get_template_part( 'template-parts/post/card-article' );
 			// for the test purposes comment the line above and uncomment the below one
-			// the_title();
-
+      // the_title();
+      endif;
 
 		endwhile;
 

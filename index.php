@@ -24,9 +24,7 @@ get_header();
               <div class="grid articles__grid">
                 <?php
                 while ( have_posts() ) : the_post(); ?>
-                  <div class="grid__col grid__col-sm-4 grid__col-6">
-                    <?php get_template_part( 'template-parts/post/card-article' ); ?>
-                  </div>
+                  <?php get_template_part( 'template-parts/post/card-article' ); ?>
                 <?php endwhile; ?>
                 
                 <div class="btn__container grid__col-12">

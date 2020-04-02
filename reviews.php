@@ -57,40 +57,7 @@ get_header();
           <div class="reviews-form__heading heading">
             <h2 class="heading__title">Оставить отзыв</h2>
           </div>
-          <form class="form form-review">
-            <div class="grid form-review__grid">
-              <div class="grid__col grid__col-md-4 grid__col-sm-6">
-                <div class="inputbox">
-                  <label class="inputbox__label hidden-visually" for="form-review-name">Ваше имя</label>
-                  <div class="inputbox__wrapper">
-                    <input class="input" type="text" name="form-review-name" id="form-review-name" placeholder="Ваше имя" />
-                  </div>
-                </div>
-                <div class="inputbox">
-                  <label class="inputbox__label hidden-visually" for="form-review-social">Ссылка на соц. сеть</label>
-                  <div class="inputbox__wrapper">
-                    <input class="input" type="text" name="form-review-social" id="form-review-social" placeholder="Ссылка на соц. сеть" />
-                  </div>
-                </div>
-                <div class="inputbox">
-                  <label class="inputfile">
-                    <input class="inputfile__input" type="file" name="form-review-photo" accept="image/png, image/jpeg, image/jpg" />
-                    <span class="inputfile__btn">Обзор</span>
-                    <span class="inputfile__content">Загрузите ваше фото</span>
-                  </label>
-                </div>
-              </div>
-              <div class="grid__col grid__col-md-8 grid__col-sm-6">
-                <div class="inputbox">
-                  <label class="inputbox__label hidden-visually" for="form-review-message">Ваше сообщение</label>
-                  <div class="inputbox__wrapper">
-                    <textarea class="textarea" name="form-review-message" id="form-review-message" placeholder="Ваше сообщение"></textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <button class="btn btn--primary btn--wider" type="submit">Отправить сообщение</button>
-          </form>
+          <?php echo do_shortcode( '[contact-form-7 id="252" title="Форма - Отзыв" html_class="form form-review"]' ); ?>
         </div>
       </section>
     </div>
