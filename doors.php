@@ -53,17 +53,16 @@ get_header();
 
                   $query = new WP_Query($args);
 
-                  if( $query->have_posts() ) {
-                    while( $query->have_posts() ) {
-                      $query->the_post();
-                      ?>
-                      <div class="grid__col grid__col-sm-4 grid__col-6">
-                        <?php get_template_part( 'template-parts/post/card-goods' ); ?>
-                      </div>
-                      <?php
-                    }
+                  if( $query->have_posts() ) : while( $query->have_posts() ) :
+                    $query->the_post();
+                    ?>
+                    <div class="grid__col grid__col-sm-4 grid__col-6">
+                      <?php get_template_part( 'template-parts/post/card-goods' ); ?>
+                    </div>
+                    <?php
+                    endwhile; 
                     wp_reset_postdata();
-                  }
+                  endif;
                   ?>
                 </div>
               </div>

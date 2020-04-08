@@ -9,10 +9,10 @@ get_header();
 <main class="wrapper" role="main">
   <div class="layout">
     <?php
-    // Выводит верхний слайдер
+    // Верхний слайдер
     get_template_part( 'template-parts/top-slider' );
 
-    // Выводит верхний блок преимуществ
+    // Верхний блок преимуществ
     get_template_part( 'template-parts/top-flag-list' );
     ?>
     
@@ -1098,7 +1098,7 @@ get_header();
 
               <?php
               // Выводит калькулятор окон
-              get_template_part( 'template-parts/calc-windows' );
+              get_template_part( 'template-parts/calculators/calc-windows' );
               ?>
 
             </div>
@@ -1108,93 +1108,22 @@ get_header();
     </div>
 
     <?php
-    // Выводит блок услуг остекления
+    // Блок услуг остекления
     get_template_part( 'template-parts/nav-line' );
     
-    // Выводит Инфо баннер
+    // Инфо баннер
     get_template_part( 'template-parts/banner/banner-info' );
-    ?>
-    
-    <section class="portfolio">
-      <div class="container">
-        <div class="portfolio__heading heading heading--center">
-          <h2 class="heading__title">Портфолио</h2>
-          <p class="heading__subtitle">За 10 лет работы, мы установили более 5 760 пластиковых окон</p>
-        </div>
-        <div class="swiper-container portfolio-slider js-portfolio-slider" id="portfolio-slider">
-          <div class="swiper-wrapper">
-          <?php
-          global $post;
-          $args = array(
-            'numberposts'    => 10,
-            'post_type'      => 'projects',
-            );
 
-          $projects = get_posts( $args );
-          foreach ( $projects as $post ) : setup_postdata( $post ); ?>
+    // Блок Портфолио
+    get_template_part( 'template-parts/portfolio' );
 
-            <div class="swiper-slide">
-              <a class="portfolio-item" href="<?php the_permalink(); ?>" target="_blank">
-                <img class="portfolio-item__img swiper-lazy"
-                     data-src="<?php the_post_thumbnail_url( 'image-300x240' ); ?>"
-                     alt="">
-                <!-- <div class="swiper-lazy-preloader"></div> -->
-              </a>
-            </div>
-
-          <?php endforeach; 
-          wp_reset_postdata();?>
-          </div>
-          <div class="swiper-pagination"></div>
-          <div class="swiper-scrollbar"></div>
-        </div>
-      </div>
-    </section>
-
-    <?php
-    // Выводит баннер с рассрочкой
+    // Баннер с рассрочкой
     get_template_part( 'template-parts/banner/banner-installment' );
-    ?>
 
-    <section class="articles">
-      <div class="container">
-        <div class="articles__heading heading heading--center">
-          <h2 class="heading__title">Полезная информация</h2>
-          <p class="heading__subtitle">
-            Больше информации в
-            <a href="<?php echo get_permalink( get_option( 'page_for_posts' ) ); ?>">
-              специальном разделе
-            </a>
-          </p>
-        </div>
-
-        <div class="articles-swiper-block swiper-block js-articles-swiper">
-          <div class="swiper-container articles-slider js-articles-slider" id="articles-slider">
-            <div class="swiper-wrapper">
-            <?php
-            global $post;
-            $args = array( 'posts_per_page' => 6);
-
-            $articles = get_posts( $args );
-            foreach ( $articles as $post ) : setup_postdata( $post ); ?>
-              <div class="swiper-slide">
-                <?php get_template_part( 'template-parts/post/card-article' ); ?>
-              </div>
-            <?php endforeach; 
-            wp_reset_postdata();?>
-
-
-            </div>
-          </div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
-
-      </div>
-    </section>
+    // Блок Статьи
+    get_template_part( 'template-parts/articles' );
     
-    <?php
-    // Выводит общий баннер для заявки на замер
+    // Общий баннер для заявки на замер
     get_template_part( 'template-parts/banner/banner-application' );
     ?>
 

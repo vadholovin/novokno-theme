@@ -1,5 +1,5 @@
 <?php
-if ( is_front_page() ) : ?>
+if ( is_front_page()  || is_page( 'doors-calculator' )  || is_page( 'windows-calculator' ) ) : ?>
 
   <div class="article article--slide">
     <figure class="article__thumb">
