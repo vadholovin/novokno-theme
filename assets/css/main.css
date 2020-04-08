@@ -5331,12 +5331,12 @@ table{
   top:50%;
   left:50%;
   font-weight:normal;
-  font-size:16px;
+  font-size:14px;
   line-height:1.15;
-  letter-spacing:0.025em;
+  letter-spacing:0.1em;
   color:#fff;
   text-align:center;
-  transform:translate(-50%, 10px);
+  transform:translate(-50%, 10px) scaleX(0.1);
   opacity:0;
   z-index:2;
   transition:opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1), transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
@@ -5345,7 +5345,7 @@ table{
   opacity:1;
 }
 .portfolio-item:hover::after, .portfolio-item:active::after, .portfolio-item:focus::after{
-  transform:translate(-50%, -50%);
+  transform:translate(-50%, -50%) scaleX(1);
 }
 .portfolio-item:hover .portfolio-item__img, .portfolio-item:active .portfolio-item__img, .portfolio-item:focus .portfolio-item__img{
   transform:translate(-50%, -50%) scale(1.1);
