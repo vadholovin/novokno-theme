@@ -343,35 +343,41 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 document.addEventListener('DOMContentLoaded', function () {
-  var productThumbs = new Swiper('.js-product-thumbs', {
-    preloadImages: false,
-    lazy: true,
-    slidesPerView: 3,
-    spaceBetween: 20,
-    direction: 'vertical',
-    keyboard: {
-      enabled: true
-    },
-    breakpoints: {
-      320: {
-        spaceBetween: 8
+  var products = document.querySelectorAll('.product');
+
+  for (var i = 0; i < products.length; i++) {
+    var thumbs = '#product-thumbs-' + i;
+    var slider = '#product-slider-' + i;
+    var productThumbs = new Swiper(thumbs, {
+      preloadImages: false,
+      lazy: true,
+      slidesPerView: 3,
+      spaceBetween: 20,
+      direction: 'vertical',
+      keyboard: {
+        enabled: true
       },
-      1024: {
-        spaceBetween: 20
+      breakpoints: {
+        320: {
+          spaceBetween: 8
+        },
+        1024: {
+          spaceBetween: 20
+        }
       }
-    }
-  });
-  var product = new Swiper('.js-product-slider', {
-    preloadImages: false,
-    lazy: true,
-    effect: 'fade',
-    fadeEffect: {
-      crossFade: true
-    },
-    thumbs: {
-      swiper: productThumbs
-    }
-  });
+    });
+    var product = new Swiper(slider, {
+      preloadImages: false,
+      lazy: true,
+      effect: 'fade',
+      fadeEffect: {
+        crossFade: true
+      },
+      thumbs: {
+        swiper: productThumbs
+      }
+    });
+  }
 });
 /**
  * NOUISLIDER
@@ -502,8 +508,7 @@ document.addEventListener('DOMContentLoaded', function () {
  */
 
 document.addEventListener('DOMContentLoaded', function () {
-  tippy('[data-tippy-content]', {
-    theme: 'light'
+  tippy('[data-tippy-content]', {// theme: 'light',
   });
 });
 /**
@@ -630,4 +635,18 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   }
+})(jQuery);
+/**
+ * READMORE
+ */
+
+
+(function ($) {
+  $('.js-product-features-table').readmore({
+    collapsedHeight: 240,
+    speed: 75,
+    moreLink: '<a class="product-features__more" href="#">Все характеристики</a>',
+    lessLink: '',
+    heightMargin: 16
+  });
 })(jQuery);

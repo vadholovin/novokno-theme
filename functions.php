@@ -336,46 +336,6 @@ add_filter( 'excerpt_more', 'wpdocs_excerpt_more' );
  * Register post types
  */
 function novokno_register_post_types() {
-  // Reviews
-  register_post_type('reviews', array(
-		'label'  => null,
-		'labels' => array(
-			'name'               => 'Отзывы', // основное название для типа записи
-			'singular_name'      => 'Отзыв', // название для одной записи этого типа
-			'add_new'            => 'Добавить Отзыв', // для добавления новой записи
-			'add_new_item'       => 'Добавление Отзыва', // заголовка у вновь создаваемой записи в админ-панели.
-			'edit_item'          => 'Редактирование Отзыва', // для редактирования типа записи
-			'new_item'           => 'Новый Отзыв', // текст новой записи
-			'view_item'          => 'Смотреть Отзыв', // для просмотра записи этого типа.
-			'search_items'       => 'Искать Отзыв', // для поиска по этим типам записи
-			'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
-			'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
-			'parent_item_colon'  => '', // для родителей (у древовидных типов)
-			'menu_name'          => 'Отзывы', // название меню
-		),
-		'description'         => '',
-		'public'              => true,
-		'publicly_queryable'  => true, // зависит от public
-		'exclude_from_search' => true, // зависит от public
-		'show_ui'             => true, // зависит от public
-		'show_in_menu'        => true, // показывать ли в меню адмнки
-		'show_in_admin_bar'   => true, // по умолчанию значение show_in_menu
-		'show_in_nav_menus'   => true, // зависит от public
-		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
-		'rest_base'           => null, // $post_type. C WP 4.7
-		'menu_position'       => null,
-		'menu_icon'           => 'dashicons-format-status',
-		//'capability_type'   => 'post',
-		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
-		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
-		'hierarchical'        => false,
-		'supports'            => array('title','thumbnail', 'editor'), // 'title','editor','author','thumbnail','excerpt','trackbacks','custom-fields','comments','revisions','page-attributes','post-formats'
-		'taxonomies'          => array(),
-		'has_archive'         => false,
-		'rewrite'             => array('slug' => 'reviews', 'with_front' => false ),
-		'query_var'           => true,
-  ) );
-
 
   // Projects
   register_post_type('projects', array(
@@ -416,6 +376,137 @@ function novokno_register_post_types() {
 		'rewrite'             => array('slug' => 'projects', 'with_front' => false ),
 		'query_var'           => true,
   ) );
+
+
+  // Windows for flat
+  register_post_type('window-flat', array(
+		'label'  => null,
+		'labels' => array(
+			'name'               => 'Окна в квартиру', // основное название для типа записи
+			'singular_name'      => 'Окно в квартиру', // название для одной записи этого типа
+			'add_new'            => 'Добавить Окно', // для добавления новой записи
+			'add_new_item'       => 'Добавление Окна', // заголовка у вновь создаваемой записи в админ-панели.
+			'edit_item'          => 'Редактирование Окна', // для редактирования типа записи
+			'new_item'           => 'Новое Окно', // текст новой записи
+			'view_item'          => 'Смотреть Окно', // для просмотра записи этого типа.
+			'search_items'       => 'Искать Окно', // для поиска по этим типам записи
+			'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
+			'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
+			'parent_item_colon'  => '', // для родителей (у древовидных типов)
+			'menu_name'          => 'Окна в квартиру', // название меню
+		),
+		'description'         => '',
+		'public'              => true,
+		'publicly_queryable'  => true, // зависит от public
+		'exclude_from_search' => true, // зависит от public
+		'show_ui'             => true, // зависит от public
+		'show_in_menu'        => true, // показывать ли в меню адмнки
+		'show_in_admin_bar'   => true, // по умолчанию значение show_in_menu
+		'show_in_nav_menus'   => true, // зависит от public
+		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
+		'rest_base'           => null, // $post_type. C WP 4.7
+		'menu_position'       => null,
+		'menu_icon'           => 'dashicons-format-status',
+		'capability_type'   => 'post',
+		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
+		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
+		'hierarchical'        => true,
+		'supports'            => array('title','thumbnail'),
+		'taxonomies'          => array( 'producers' ),
+		'has_archive'         => false,
+		'rewrite'             => array('slug' => 'windows', 'with_front' => false ),
+		'query_var'           => true,
+  ) );
+
+
+  // Windows for house
+  register_post_type('window-house', array(
+		'label'  => null,
+		'labels' => array(
+			'name'               => 'Окна в дом', // основное название для типа записи
+			'singular_name'      => 'Окно в дом', // название для одной записи этого типа
+			'add_new'            => 'Добавить Окно', // для добавления новой записи
+			'add_new_item'       => 'Добавление Окна', // заголовка у вновь создаваемой записи в админ-панели.
+			'edit_item'          => 'Редактирование Окна', // для редактирования типа записи
+			'new_item'           => 'Новое Окно', // текст новой записи
+			'view_item'          => 'Смотреть Окно', // для просмотра записи этого типа.
+			'search_items'       => 'Искать Окно', // для поиска по этим типам записи
+			'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
+			'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
+			'parent_item_colon'  => '', // для родителей (у древовидных типов)
+			'menu_name'          => 'Окна в дом', // название меню
+		),
+		'description'         => '',
+		'public'              => true,
+		'publicly_queryable'  => true, // зависит от public
+		'exclude_from_search' => true, // зависит от public
+		'show_ui'             => true, // зависит от public
+		'show_in_menu'        => true, // показывать ли в меню адмнки
+		'show_in_admin_bar'   => true, // по умолчанию значение show_in_menu
+		'show_in_nav_menus'   => true, // зависит от public
+		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
+		'rest_base'           => null, // $post_type. C WP 4.7
+		'menu_position'       => null,
+		'menu_icon'           => 'dashicons-format-status',
+		'capability_type'   => 'post',
+		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
+		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
+		'hierarchical'        => true,
+		'supports'            => array('title','thumbnail'),
+		'taxonomies'          => array( 'producers' ),
+		'has_archive'         => false,
+		'rewrite'             => array('slug' => 'windows', 'with_front' => false ),
+		'query_var'           => true,
+  ) );
+
+
+  // Windows for dacha
+  register_post_type('window-dacha', array(
+		'label'  => null,
+		'labels' => array(
+			'name'               => 'Окна на дачу', // основное название для типа записи
+			'singular_name'      => 'Окно на дачу', // название для одной записи этого типа
+			'add_new'            => 'Добавить Окно', // для добавления новой записи
+			'add_new_item'       => 'Добавление Окна', // заголовка у вновь создаваемой записи в админ-панели.
+			'edit_item'          => 'Редактирование Окна', // для редактирования типа записи
+			'new_item'           => 'Новое Окно', // текст новой записи
+			'view_item'          => 'Смотреть Окно', // для просмотра записи этого типа.
+			'search_items'       => 'Искать Окно', // для поиска по этим типам записи
+			'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
+			'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
+			'parent_item_colon'  => '', // для родителей (у древовидных типов)
+			'menu_name'          => 'Окна на дачу', // название меню
+		),
+		'description'         => '',
+		'public'              => true,
+		'publicly_queryable'  => true, // зависит от public
+		'exclude_from_search' => true, // зависит от public
+		'show_ui'             => true, // зависит от public
+		'show_in_menu'        => true, // показывать ли в меню адмнки
+		'show_in_admin_bar'   => true, // по умолчанию значение show_in_menu
+		'show_in_nav_menus'   => true, // зависит от public
+		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
+		'rest_base'           => null, // $post_type. C WP 4.7
+		'menu_position'       => null,
+		'menu_icon'           => 'dashicons-format-status',
+		'capability_type'   => 'post',
+		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
+		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
+		'hierarchical'        => true,
+		'supports'            => array('title','thumbnail'),
+		'taxonomies'          => array( 'producers' ),
+		'has_archive'         => false,
+		'rewrite'             => array('slug' => 'windows', 'with_front' => false ),
+		'query_var'           => true,
+  ) );
+
+  register_taxonomy( 'producers', array( 'window-flat', 'window-house', 'window-dacha' ), array(
+    'hierarchical' => true,
+    'label' => 'Производители',
+    'singular_label' => 'Производитель',
+    'rewrite' => array( 'slug' => 'producers', 'with_front'=> false )
+    )
+  );
 
 
   // Doors
@@ -459,15 +550,53 @@ function novokno_register_post_types() {
   ) );
 
   register_taxonomy( 'categories', array('door'), array(
-    'hierarchical' => true, 
-    'label' => 'Категории', 
-    'singular_label' => 'Категория', 
+    'hierarchical' => true,
+    'label' => 'Категории',
+    'singular_label' => 'Категория',
     'rewrite' => array( 'slug' => 'categories', 'with_front'=> false )
     )
   );
 
-  
 
+  // Reviews
+  register_post_type('reviews', array(
+    'label'  => null,
+    'labels' => array(
+      'name'               => 'Отзывы', // основное название для типа записи
+      'singular_name'      => 'Отзыв', // название для одной записи этого типа
+      'add_new'            => 'Добавить Отзыв', // для добавления новой записи
+      'add_new_item'       => 'Добавление Отзыва', // заголовка у вновь создаваемой записи в админ-панели.
+      'edit_item'          => 'Редактирование Отзыва', // для редактирования типа записи
+      'new_item'           => 'Новый Отзыв', // текст новой записи
+      'view_item'          => 'Смотреть Отзыв', // для просмотра записи этого типа.
+      'search_items'       => 'Искать Отзыв', // для поиска по этим типам записи
+      'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
+      'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
+      'parent_item_colon'  => '', // для родителей (у древовидных типов)
+      'menu_name'          => 'Отзывы', // название меню
+    ),
+    'description'         => '',
+    'public'              => true,
+    'publicly_queryable'  => true, // зависит от public
+    'exclude_from_search' => true, // зависит от public
+    'show_ui'             => true, // зависит от public
+    'show_in_menu'        => true, // показывать ли в меню адмнки
+    'show_in_admin_bar'   => true, // по умолчанию значение show_in_menu
+    'show_in_nav_menus'   => true, // зависит от public
+    'show_in_rest'        => true, // добавить в REST API. C WP 4.7
+    'rest_base'           => null, // $post_type. C WP 4.7
+    'menu_position'       => null,
+    'menu_icon'           => 'dashicons-format-status',
+    //'capability_type'   => 'post',
+    //'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
+    //'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
+    'hierarchical'        => false,
+    'supports'            => array('title','thumbnail', 'editor'), // 'title','editor','author','thumbnail','excerpt','trackbacks','custom-fields','comments','revisions','page-attributes','post-formats'
+    'taxonomies'          => array(),
+    'has_archive'         => false,
+    'rewrite'             => array('slug' => 'reviews', 'with_front' => false ),
+    'query_var'           => true,
+  ) );
 
 
 }
