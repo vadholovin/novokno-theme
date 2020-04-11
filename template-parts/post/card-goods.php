@@ -1,4 +1,7 @@
-<?php if ( 'window' == get_post_type() ) : ?>
+<?php if ( 'window' == get_post_type()
+        || 'window-flat' == get_post_type()
+        || 'window-house' == get_post_type()
+        || 'window-dacha' == get_post_type() ) : ?>
 <div class="goods-tile">
 <?php elseif ( 'door' == get_post_type() ) : ?>
 <div class="goods-tile goods-tile--doors">
@@ -7,9 +10,10 @@
   <div class="goods-tile__inner">
     <figure class="goods-tile__picture">
       <?php if ( has_post_thumbnail() ): ?>
-      <img src="<?php echo esc_url( get_the_post_thumbnail_url(get_the_ID(),'image-h-240') ); ?>"
-           title="<?php the_field( 'goods_title' ) . ' ' . the_field( 'goods_subtitle' ); ?>"
-           alt="" />
+      <img data-src="<?php echo esc_url( get_the_post_thumbnail_url(get_the_ID(),'image-h-240') ); ?>"
+          class="lozad"
+          title="<?php the_field( 'goods_title' ) . ' ' . the_field( 'goods_subtitle' ); ?>"
+          alt="" />
       <?php endif; ?>
     </figure>
     <h3 class="goods-tile__heading">
@@ -27,7 +31,10 @@
       <?php endif; ?>
     </div>
 
-    <?php if ( 'window' == get_post_type() ) : ?>
+    <?php if ( 'window' == get_post_type()
+            || 'window-flat' == get_post_type()
+            || 'window-house' == get_post_type()
+            || 'window-dacha' == get_post_type() ) : ?>
     <button class="btn btn--primary btn--block">Рассчитать</button>
     <?php elseif ( 'door' == get_post_type() ) : ?>
     <button class="btn btn--primary btn--block">Подробнее</button>

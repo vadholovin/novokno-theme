@@ -4,6 +4,19 @@
  */
 
 get_header();
+
+$POST_TYPES = array(
+  'window-flat'   => 'Окна в квартиру',
+  'window-house'  => 'Окна в дом',
+  'window-dacha'  => 'Окна на дачу',
+);
+
+$TERMS = get_terms( array(
+  'taxonomy'      => array( 'brand' ),
+  // 'orderby'       => 'id', 
+  'order'         => 'ASC',
+  'hide_empty'    => true,
+) );
 ?>
 
   <main class="wrapper">
@@ -16,302 +29,103 @@ get_header();
               <p class="heading__subtitle">Остекление квартир, домов, дач в Подольске с гарантией на 5 лет</p>
             </div>
             <ul class="tabs goods-primary-tabs">
+              <?php
+              $post_types_counter = 0;
+
+              foreach ( $POST_TYPES as $post_type => $post_type_value ) : ?>
               <li class="tabs__tab-wrap">
-                <button class="tab is-active" role="tab" data-tab-target="goods00">Окна в квартиру</button>
+                <button class="tab <?php if ( $post_types_counter == 0 ) echo 'is-active'; ?>"
+                        role="tab"
+                        data-tab-target="<?= $post_type; ?>">
+                        <?= $post_type_value; ?>
+                </button>
               </li>
-              <li class="tabs__tab-wrap">
-                <button class="tab" role="tab" data-tab-target="goods01">Окна в дом</button>
-              </li>
-              <li class="tabs__tab-wrap">
-                <button class="tab" role="tab" data-tab-target="goods02">Окна на дачу</button>
-              </li>
+              <?php
+              $post_types_counter++;
+              endforeach;
+              ?>
             </ul>
 
             <div class="tabs-content goods-primary-tabs-content">
-
               <?php
-              $categories = array( 'window-flat', 'window-house', 'window-dacha' );
+              $post_types_counter = 0;
+              // Loop level 1
+              foreach ( $POST_TYPES as $post_type => $post_type_value ) : ?>
 
-              foreach ($categories as $i => $category) : ?>
-
-              <div class="tabs-content__wrapper <?php if ($i == 0) echo 'is-active'; ?>" role="tabpanel" data-tab="goods00" data-tab-group="goods">
+              <div class="tabs-content__wrapper <?php if ( $post_types_counter == 0 ) echo 'is-active'; ?>"
+                  role="tabpanel"
+                  data-tab="<?= $post_type; ?>"
+                  data-tab-group="goods">
                 <ul class="tabs goods-secondary-tabs">
                   <?php
-                  $args = array(
-                    'numberposts'    => -1,
-                    'post_type'      => $category,
-                    'order'          => 'ASC',
-                  );
-
-                  $query = new WP_Query($args);
-
-                  if( $query->have_posts() ) : while( $query->have_posts() ) :
-                    $query->the_post();
-                    ?>
-                  <li class="tabs__tab-wrap">
-                    <button class="tab is-active" role="tab" data-tab-target="apartment00">Geolan</button>
-                  </li>
-                  <?php
-                    endwhile; 
-                    wp_reset_postdata();
-                  endif;
-                  ?>
+                  if ( $TERMS && ! is_wp_error($terms) ) :
+                    foreach ( $TERMS as $term_key => $term ) : ?>
+                    <li class="tabs__tab-wrap">
+                      <button class="tab <?php if ( $term_key == 0 ) echo 'is-active'; ?>"
+                              role="tab"
+                              data-tab-target="<?php echo $post_type . '-' . $term->slug; ?>">
+                        <?php echo $term->name; ?>
+                      </button>
+                    </li>
+                    <?php
+                    endforeach;
+                  endif; ?>
                 </ul>
+
                 <div class="tabs-content goods-secondary-tabs-content">
-
-
-                  <div class="tabs-content__wrapper is-active" role="tabpanel" data-tab="apartment00" data-tab-group="apartment">
+                <?php
+                // Loop level 2
+                foreach ($TERMS as $term_key =>  $term) : ?>
+                  <div class="tabs-content__wrapper <?php if ($term_key == 0) echo 'is-active'; ?>"
+                      role="tabpanel"
+                      data-tab="<?php echo $post_type . '-' . $term->slug; ?>"
+                      data-tab-group="<?php echo $post_type; ?>">
                     <div class="grid goods-list">
-                      <div class="grid__col grid__col-sm-4 grid__col-6">
-                        <div class="goods-tile">
-                          <div class="goods-tile__inner">
-                            <a class="goods-tile__picture" href="">
-                              <img src="assets/img/content/windows/window-single-non-opening.jpg" title="" alt="" />
-                            </a>
-                            <a class="goods-tile__heading" href="" title="Пластиковое окно с глухой створкой">
-                              <span class="goods-tile__title">Пластиковое окно</span>
-                              <span class="goods-tile__subtitle">с глухой створкой</span>
-                            </a>
-                            <div class="goods-tile__prices">
-                              <div class="goods-tile__price">
-                                <span class="goods-tile__price-label">Цена:</span>
-                                <span class="goods-tile__price-value">10 100</span>
-                                <span class="goods-tile__price-currency">₽</span>
-                              </div>
-                              <div class="goods-tile__price-old"> 12 100 ₽</div>
-                            </div>
-                            <button class="btn btn--primary btn--block">Рассчитать</button>
-                          </div>
+
+                      <?php
+                      $args = array(
+                        'post_type'       => $post_type,
+                        'posts_per_page'  => -1,
+                        'meta_key'			=> 'goods_price',
+                        'orderby'			=> 'meta_value',
+                        'order'				=> 'ASC',
+                        'tax_query'       => array(
+                          array(
+                            'taxonomy' => 'brand',
+                            'field'    => 'slug',
+                            'terms'    => $term->slug,
+                          ),
+                        ),
+                      );
+
+                      $posts = new WP_Query($args);
+  
+                      if ( $posts->have_posts() ) :
+                        // Loop level 3
+                        while ( $posts->have_posts() ) : $posts->the_post();
+                        ?>
+                        <div class="grid__col grid__col-sm-4 grid__col-6">
+                          <?php get_template_part( 'template-parts/post/card-goods' ); ?>
                         </div>
-                      </div>
-                      <div class="grid__col grid__col-sm-4 grid__col-6">
-                        <div class="goods-tile">
-                          <div class="goods-tile__inner">
-                            <a class="goods-tile__picture" href="">
-                              <img src="assets/img/content/windows/window-single-opening.jpg" title="" alt="" />
-                            </a>
-                            <a class="goods-tile__heading" href="" title="Пластиковое окно с открывающейсая створкой">
-                              <span class="goods-tile__title">Пластиковое окно</span>
-                              <span class="goods-tile__subtitle">с открывающейсая створкой</span>
-                            </a>
-                            <div class="goods-tile__prices">
-                              <div class="goods-tile__price">
-                                <span class="goods-tile__price-label">Цена:</span>
-                                <span class="goods-tile__price-value">10 100</span>
-                                <span class="goods-tile__price-currency">₽</span>
-                              </div>
-                              <div class="goods-tile__price-old"> 12 100 ₽</div>
-                            </div>
-                            <button class="btn btn--primary btn--block">Рассчитать</button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="grid__col grid__col-sm-4 grid__col-6">
-                        <div class="goods-tile">
-                          <div class="goods-tile__inner">
-                            <a class="goods-tile__picture" href="">
-                              <img src="assets/img/content/windows/window-double-non-opening.jpg" title="" alt="" />
-                            </a>
-                            <a class="goods-tile__heading" href="" title="Двухстворчатое окно c глухими створками">
-                              <span class="goods-tile__title">Двухстворчатое окно</span>
-                              <span class="goods-tile__subtitle">c глухими створками</span>
-                            </a>
-                            <div class="goods-tile__prices">
-                              <div class="goods-tile__price">
-                                <span class="goods-tile__price-label">Цена:</span>
-                                <span class="goods-tile__price-value">10 100</span>
-                                <span class="goods-tile__price-currency">₽</span>
-                              </div>
-                              <div class="goods-tile__price-old"> 12 100 ₽</div>
-                            </div>
-                            <button class="btn btn--primary btn--block">Рассчитать</button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="grid__col grid__col-sm-4 grid__col-6">
-                        <div class="goods-tile">
-                          <div class="goods-tile__inner">
-                            <a class="goods-tile__picture" href="">
-                              <img src="assets/img/content/windows/window-double-opening-non-opening.jpg" title="" alt="" />
-                            </a>
-                            <a class="goods-tile__heading" href="" title="Двухстворчатое окно с открывающейся и глухой створкой">
-                              <span class="goods-tile__title">Двухстворчатое окно</span>
-                              <span class="goods-tile__subtitle">с открывающейся и глухой створкой</span>
-                            </a>
-                            <div class="goods-tile__prices">
-                              <div class="goods-tile__price">
-                                <span class="goods-tile__price-label">Цена:</span>
-                                <span class="goods-tile__price-value">10 100</span>
-                                <span class="goods-tile__price-currency">₽</span>
-                              </div>
-                              <div class="goods-tile__price-old"> 12 100 ₽</div>
-                            </div>
-                            <button class="btn btn--primary btn--block">Рассчитать</button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="grid__col grid__col-sm-4 grid__col-6">
-                        <div class="goods-tile">
-                          <div class="goods-tile__inner">
-                            <a class="goods-tile__picture" href="">
-                              <img src="assets/img/content/windows/window-double-opening.jpg" title="" alt="" />
-                            </a>
-                            <a class="goods-tile__heading" href="" title="Двухстворчатое окно с двумя открывающимися створками">
-                              <span class="goods-tile__title">Двухстворчатое окно</span>
-                              <span class="goods-tile__subtitle">с двумя открывающимися створками</span>
-                            </a>
-                            <div class="goods-tile__prices">
-                              <div class="goods-tile__price">
-                                <span class="goods-tile__price-label">Цена:</span>
-                                <span class="goods-tile__price-value">10 100</span>
-                                <span class="goods-tile__price-currency">₽</span>
-                              </div>
-                              <div class="goods-tile__price-old"> 12 100 ₽</div>
-                            </div>
-                            <button class="btn btn--primary btn--block">Рассчитать</button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="grid__col grid__col-sm-4 grid__col-6">
-                        <div class="goods-tile">
-                          <div class="goods-tile__inner">
-                            <a class="goods-tile__picture" href="">
-                              <img src="assets/img/content/windows/window-triple-non-opening.jpg" title="" alt="" />
-                            </a>
-                            <a class="goods-tile__heading" href="" title="Трёхстворчатое окно с тремя глухими створками">
-                              <span class="goods-tile__title">Трёхстворчатое окно</span>
-                              <span class="goods-tile__subtitle">с тремя глухими створками</span>
-                            </a>
-                            <div class="goods-tile__prices">
-                              <div class="goods-tile__price">
-                                <span class="goods-tile__price-label">Цена:</span>
-                                <span class="goods-tile__price-value">10 100</span>
-                                <span class="goods-tile__price-currency">₽</span>
-                              </div>
-                              <div class="goods-tile__price-old"> 12 100 ₽</div>
-                            </div>
-                            <button class="btn btn--primary btn--block">Рассчитать</button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="grid__col grid__col-sm-4 grid__col-6">
-                        <div class="goods-tile">
-                          <div class="goods-tile__inner">
-                            <a class="goods-tile__picture" href="">
-                              <img src="assets/img/content/windows/window-triple-opening-non-opening.jpg" title="" alt="" />
-                            </a>
-                            <a class="goods-tile__heading" href="" title="Трёхстворчатое окно с одной открывающейся створкой">
-                              <span class="goods-tile__title">Трёхстворчатое окно</span>
-                              <span class="goods-tile__subtitle">с одной открывающейся створкой</span>
-                            </a>
-                            <div class="goods-tile__prices">
-                              <div class="goods-tile__price">
-                                <span class="goods-tile__price-label">Цена:</span>
-                                <span class="goods-tile__price-value">10 100</span>
-                                <span class="goods-tile__price-currency">₽</span>
-                              </div>
-                              <div class="goods-tile__price-old"> 12 100 ₽</div>
-                            </div>
-                            <button class="btn btn--primary btn--block">Рассчитать</button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="grid__col grid__col-sm-4 grid__col-6">
-                        <div class="goods-tile">
-                          <div class="goods-tile__inner">
-                            <a class="goods-tile__picture" href="">
-                              <img src="assets/img/content/windows/window-triple-opening.jpg" title="" alt="" />
-                            </a>
-                            <a class="goods-tile__heading" href="" title="Трёхстворчатое окно с двумя открывающимися створками">
-                              <span class="goods-tile__title">Трёхстворчатое окно</span>
-                              <span class="goods-tile__subtitle">с двумя открывающимися створками</span>
-                            </a>
-                            <div class="goods-tile__prices">
-                              <div class="goods-tile__price">
-                                <span class="goods-tile__price-label">Цена:</span>
-                                <span class="goods-tile__price-value">10 100</span>
-                                <span class="goods-tile__price-currency">₽</span>
-                              </div>
-                              <div class="goods-tile__price-old"> 12 100 ₽</div>
-                            </div>
-                            <button class="btn btn--primary btn--block">Рассчитать</button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="grid__col grid__col-sm-4 grid__col-6">
-                        <div class="goods-tile">
-                          <div class="goods-tile__inner">
-                            <a class="goods-tile__picture" href="">
-                              <img src="assets/img/content/windows/window-balcony-non-opening.jpg" title="" alt="" />
-                            </a>
-                            <a class="goods-tile__heading" href="" title="Балконный блок с глухими створками">
-                              <span class="goods-tile__title">Балконный блок</span>
-                              <span class="goods-tile__subtitle">с глухими створками</span>
-                            </a>
-                            <div class="goods-tile__prices">
-                              <div class="goods-tile__price">
-                                <span class="goods-tile__price-label">Цена:</span>
-                                <span class="goods-tile__price-value">10 100</span>
-                                <span class="goods-tile__price-currency">₽</span>
-                              </div>
-                              <div class="goods-tile__price-old"> 12 100 ₽</div>
-                            </div>
-                            <button class="btn btn--primary btn--block">Рассчитать</button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="grid__col grid__col-sm-4 grid__col-6">
-                        <div class="goods-tile">
-                          <div class="goods-tile__inner">
-                            <a class="goods-tile__picture" href="">
-                              <img src="assets/img/content/windows/window-balcony-opening-non-opening.jpg" title="" alt="" />
-                            </a>
-                            <a class="goods-tile__heading" href="" title="Трёхстворчатое окно с одной открывающейся створкой">
-                              <span class="goods-tile__title">Трёхстворчатое окно</span>
-                              <span class="goods-tile__subtitle">с одной открывающейся створкой</span>
-                            </a>
-                            <div class="goods-tile__prices">
-                              <div class="goods-tile__price">
-                                <span class="goods-tile__price-label">Цена:</span>
-                                <span class="goods-tile__price-value">10 100</span>
-                                <span class="goods-tile__price-currency">₽</span>
-                              </div>
-                              <div class="goods-tile__price-old"> 12 100 ₽</div>
-                            </div>
-                            <button class="btn btn--primary btn--block">Рассчитать</button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="grid__col grid__col-sm-4 grid__col-6">
-                        <div class="goods-tile">
-                          <div class="goods-tile__inner">
-                            <a class="goods-tile__picture" href="">
-                              <img src="assets/img/content/windows/window-balcony-opening.jpg" title="" alt="" />
-                            </a>
-                            <a class="goods-tile__heading" href="" title="Трёхстворчатое окно с двумя открывающимися створками">
-                              <span class="goods-tile__title">Трёхстворчатое окно</span>
-                              <span class="goods-tile__subtitle">с двумя открывающимися створками</span>
-                            </a>
-                            <div class="goods-tile__prices">
-                              <div class="goods-tile__price">
-                                <span class="goods-tile__price-label">Цена:</span>
-                                <span class="goods-tile__price-value">10 100</span>
-                                <span class="goods-tile__price-currency">₽</span>
-                              </div>
-                              <div class="goods-tile__price-old"> 12 100 ₽</div>
-                            </div>
-                            <button class="btn btn--primary btn--block">Рассчитать</button>
-                          </div>
-                        </div>
-                      </div>
+                        <?php
+                        endwhile;
+                        // End Loop level 3
+                        wp_reset_postdata();
+                      endif;
+                      ?>
+                      
                     </div>
                   </div>
-                  
-
+                <?php
+                endforeach;
+                // End Loop level 2
+                ?>
                 </div>
               </div>
               <?php
+              $post_types_counter++;
               endforeach;
+              // End Loop level 1
               ?>
 
             </div>
@@ -320,22 +134,14 @@ get_header();
       </section>
 
       <?php
-      // Выводит общий баннер для заявки на замер
+      // Общий баннер для заявки на замер
       get_template_part( 'template-parts/banner/banner-installment' );
+
+      // Простой баннер
+      get_template_part( 'template-parts/banner/banner-simple' );
       ?>
 
-      <div class="banner lozad  banner--simple" data-background-image="assets/img/backgrounds/bg-window.jpg">
-        <div class="container">
-          <div class="banner__content">
-            <div class="banner__heading heading">
-              <h2 class="heading__title">Ламинация окон</h2>
-              <p class="heading__subtitle">Новые возможности цветовых решений для рам и области их использования.</p>
-            </div>
-            <div class="banner__accent">от 3 990 руб.</div>
-            <button class="btn btn--primary" type="button">Оставить заявку</button>
-          </div>
-        </div>
-      </div>
+      
     </div>
   </main>
   

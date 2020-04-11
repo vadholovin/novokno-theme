@@ -15,11 +15,11 @@
  * Register and Enqueue Scripts
  * Register Menus
  * WP Body Open
- * Options pages for ACF
+ * ACF - Options pages
  * Excerpt length
  * Excerpt "read more"
  * Register post types
- * Remove auto P tag in CF7
+ * CF7 - Remove auto P tag
  * Ajax loadmore
  */
 
@@ -127,7 +127,7 @@ function wpassist_remove_block_library_css(){
 add_action( 'wp_enqueue_scripts', 'wpassist_remove_block_library_css' );
 
 /**
- * Sets up theme defaults and registers support for various WordPress features.
+ * Theme Support
  */
 function novokno_theme_support() {
   /*
@@ -140,7 +140,9 @@ function novokno_theme_support() {
   add_image_size( 'image-350x280', 350, 280, true );
   add_image_size( 'image-350x200', 350, 200, true );
   add_image_size( 'image-300x240', 300, 240, true );
+  add_image_size( 'image-h-150', 9999, 150 );
   add_image_size( 'image-h-240', 9999, 240 );
+  add_image_size( 'image-h-480', 9999, 480 );
 
 
 	/*
@@ -245,7 +247,7 @@ if ( ! function_exists( 'wp_body_open' ) ) {
 
 
 /**
- * Options pages for ACF
+ * ACF - Options pages
  */
 function register_acf_options_pages() {
 
@@ -304,6 +306,7 @@ function register_acf_options_pages() {
 		'menu_title'	=> __('Баннер для рассрочки'),
 		'parent_slug'	=> 'theme-general-settings',
 	));
+  
 
 }
 
@@ -412,7 +415,7 @@ function novokno_register_post_types() {
 		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
 		'hierarchical'        => true,
 		'supports'            => array('title','thumbnail'),
-		'taxonomies'          => array( 'producers' ),
+		'taxonomies'          => array( 'brand' ),
 		'has_archive'         => false,
 		'rewrite'             => array('slug' => 'windows', 'with_front' => false ),
 		'query_var'           => true,
@@ -453,7 +456,7 @@ function novokno_register_post_types() {
 		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
 		'hierarchical'        => true,
 		'supports'            => array('title','thumbnail'),
-		'taxonomies'          => array( 'producers' ),
+		'taxonomies'          => array( 'brand' ),
 		'has_archive'         => false,
 		'rewrite'             => array('slug' => 'windows', 'with_front' => false ),
 		'query_var'           => true,
@@ -494,17 +497,75 @@ function novokno_register_post_types() {
 		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
 		'hierarchical'        => true,
 		'supports'            => array('title','thumbnail'),
-		'taxonomies'          => array( 'producers' ),
+		'taxonomies'          => array( 'brand' ),
 		'has_archive'         => false,
 		'rewrite'             => array('slug' => 'windows', 'with_front' => false ),
 		'query_var'           => true,
   ) );
 
-  register_taxonomy( 'producers', array( 'window-flat', 'window-house', 'window-dacha' ), array(
+
+  // Windows for dacha
+  register_post_type('product', array(
+		'label'  => null,
+		'labels' => array(
+			'name'               => 'Продукция', // основное название для типа записи
+			'singular_name'      => 'Продукт', // название для одной записи этого типа
+			'add_new'            => 'Добавить Продукт', // для добавления новой записи
+			'add_new_item'       => 'Добавление Продукта', // заголовка у вновь создаваемой записи в админ-панели.
+			'edit_item'          => 'Редактирование Продукта', // для редактирования типа записи
+			'new_item'           => 'Новый Продукт', // текст новой записи
+			'view_item'          => 'Смотреть Продукт', // для просмотра записи этого типа.
+			'search_items'       => 'Искать Продукт', // для поиска по этим типам записи
+			'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
+			'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
+			'parent_item_colon'  => '', // для родителей (у древовидных типов)
+			'menu_name'          => 'Продукция', // название меню
+		),
+		'description'         => '',
+		'public'              => true,
+		'publicly_queryable'  => true, // зависит от public
+		'exclude_from_search' => true, // зависит от public
+		'show_ui'             => true, // зависит от public
+		'show_in_menu'        => true, // показывать ли в меню адмнки
+		'show_in_admin_bar'   => true, // по умолчанию значение show_in_menu
+		'show_in_nav_menus'   => true, // зависит от public
+		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
+		'rest_base'           => null, // $post_type. C WP 4.7
+		'menu_position'       => null,
+		'menu_icon'           => 'dashicons-format-status',
+		'capability_type'   => 'post',
+		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
+		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
+		'hierarchical'        => true,
+		'supports'            => array( 'title' ),
+		'taxonomies'          => array( 'maker', 'colors' ),
+		'has_archive'         => false,
+		'rewrite'             => array('slug' => 'products', 'with_front' => false ),
+		'query_var'           => true,
+  ) );
+
+
+  register_taxonomy( 'brand', array( 'window-flat', 'window-house', 'window-dacha' ), array(
     'hierarchical' => true,
-    'label' => 'Производители',
-    'singular_label' => 'Производитель',
-    'rewrite' => array( 'slug' => 'producers', 'with_front'=> false )
+    'label' => 'Бренды',
+    'singular_label' => 'Бренд',
+    'rewrite' => array( 'slug' => 'brand', 'with_front'=> false )
+    )
+  );
+
+  register_taxonomy( 'maker', array( 'product' ), array(
+    'hierarchical' => true,
+    'label' => 'Бренды',
+    'singular_label' => 'Бренд',
+    'rewrite' => array( 'slug' => 'brand', 'with_front'=> false )
+    )
+  );
+
+  register_taxonomy( 'color', array( 'product' ), array(
+    'hierarchical' => true,
+    'label' => 'Расцветки',
+    'singular_label' => 'Цвет',
+    'rewrite' => array( 'slug' => 'color', 'with_front'=> false )
     )
   );
 
@@ -603,7 +664,7 @@ function novokno_register_post_types() {
 add_action( 'init', 'novokno_register_post_types' );
 
 /**
- * Remove auto P tag in CF7
+ * CF7 - Remove auto P tag
  */
 add_filter('wpcf7_autop_or_not', '__return_false');
 

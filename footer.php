@@ -126,9 +126,9 @@
             <ul class="payments footer-payments">
             <?php while( have_rows('payments', 'option') ): the_row(); ?>
               <li class="payments-item">
-                <img  src="<?php the_sub_field('icon'); ?>"
-                      title="<?php the_sub_field('name'); ?>"
-                      alt="<?php the_sub_field('name'); ?>">
+                <img src="<?php the_sub_field('icon'); ?>"
+                    title="<?php the_sub_field('name'); ?>"
+                    alt="<?php the_sub_field('name'); ?>">
               </li>
             <?php endwhile; ?>
             </ul>

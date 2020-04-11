@@ -61,7 +61,7 @@ get_header();
             <div class="grid__col grid__col-md-9">
             
               <?php
-              // Выводит блок контактов
+              // Блок контактов
               get_template_part( 'template-parts/contact-list' );
               ?>
               
@@ -71,7 +71,7 @@ get_header();
       </section>
 
       <?php
-      // Выводит общий баннер для заявки на замер
+      // Общий баннер для заявки на замер
       get_template_part( 'template-parts/banner/banner-application' );
       ?>
 

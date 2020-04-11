@@ -9,8 +9,7 @@
       $topbanner_btn = get_field( 'topbanner_btn' );	
 
       if( $topbanner_btn ) : ?>
-      <button class="btn btn--primary btn--wider js-popup-call"
-              type="button"
+      <button class="btn btn--primary btn--wider js-popup-call" type="button"
               data-form-subject="<?php echo $topbanner_btn['subject']; ?>">
         <?php echo $topbanner_btn['text']; ?>
       </button>
