@@ -380,6 +380,37 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+document.addEventListener('DOMContentLoaded', function () {
+  var productThumbs = new Swiper('#product-thumbs', {
+    preloadImages: false,
+    lazy: true,
+    slidesPerView: 3,
+    spaceBetween: 20,
+    direction: 'vertical',
+    keyboard: {
+      enabled: true
+    },
+    breakpoints: {
+      320: {
+        spaceBetween: 8
+      },
+      1024: {
+        spaceBetween: 20
+      }
+    }
+  });
+  var product = new Swiper('#product-slider', {
+    preloadImages: false,
+    lazy: true,
+    effect: 'fade',
+    fadeEffect: {
+      crossFade: true
+    },
+    thumbs: {
+      swiper: productThumbs
+    }
+  });
+});
 /**
  * NOUISLIDER
  */

@@ -1,5 +1,4 @@
-<?php if ( 'window' == get_post_type()
-        || 'window-flat' == get_post_type()
+<?php if ( 'window-flat' == get_post_type()
         || 'window-house' == get_post_type()
         || 'window-dacha' == get_post_type() ) : ?>
 <div class="goods-tile">
@@ -23,16 +22,21 @@
     <div class="goods-tile__prices">
       <div class="goods-tile__price">
         <span class="goods-tile__price-label">Цена:</span>
-        <span class="goods-tile__price-value"><?php the_field( 'goods_price' ); ?></span>
+        <?php if ( get_field( 'goods_price' ) ) :
+        $price = get_field( 'goods_price' );
+        $price = number_format($price, 0, '.', ' '); ?>
+        <span class="goods-tile__price-value"><?= $price; ?></span>
+        <?php endif; ?>
         <span class="goods-tile__price-currency">₽</span>
       </div>
-      <?php if ( get_field( 'goods_price_old' ) ) : ?>
-      <div class="goods-tile__price-old"><?php the_field( 'goods_price_old' ); ?> ₽</div>
+      <?php if ( get_field( 'goods_price_old' ) ) :
+        $price_old = get_field( 'goods_price_old' );
+        $price_old = number_format($price_old, 0, '.', ' '); ?>
+      <div class="goods-tile__price-old"><?= $price_old; ?> ₽</div>
       <?php endif; ?>
     </div>
 
-    <?php if ( 'window' == get_post_type()
-            || 'window-flat' == get_post_type()
+    <?php if ( 'window-flat' == get_post_type()
             || 'window-house' == get_post_type()
             || 'window-dacha' == get_post_type() ) : ?>
     <button class="btn btn--primary btn--block">Рассчитать</button>

@@ -1,4 +1,4 @@
-<div class="banner lozad  banner--simple" data-background-image="<?php the_field( 'service_banner_bg' ); ?>">
+<div class="banner lozad banner--simple" data-background-image="<?php the_field( 'service_banner_bg' ); ?>">
   <div class="container">
     <div class="banner__content">
       <div class="banner__heading heading">
@@ -10,8 +10,9 @@
       $service_banner_btn = get_field( 'service_banner_btn' );	
 
       if( $service_banner_btn ) : ?>
-      <button class="btn btn--primary" type="button"
-              data-form-subject="<?php echo $service_banner_btn['subject']; ?>">
+      <button
+        class="btn btn--primary" type="button"
+        data-form-subject="<?php echo $service_banner_btn['subject']; ?>">
         <?php echo $service_banner_btn['text']; ?>
       </button>
       <?php endif; ?>

@@ -14,7 +14,7 @@ get_header();
         'post_type'       => 'product',
         'posts_per_page'  => -1,
         'meta_key'			  => 'product_cost',
-        'orderby'			    => 'meta_value',
+        'orderby'			    => 'meta_value_num',
         'order'				    => 'ASC',
         'tax_query'       => array(
           array(
@@ -133,12 +133,21 @@ get_header();
                   <h1 class="product__title"><?php the_field( 'product_title' ); ?></h1>
                   <p class="product__subtitle"><?php the_field( 'product_subtitle' ); ?></p>
                 </div>
+
                 <div class="product-price">
-                  <div class="product-price__cost"><?php the_field( 'product_cost' ); ?>
+                  <div class="product-price__cost">
+                    <?php
+                    if ( get_field( 'product_cost' ) ) {
+                    $price = get_field( 'product_cost' );
+                    $price = number_format($price, 0, '.', ' ');
+                    echo $price;
+                    }
+                    ?>
                     Р <span class="product-price__cost--small">/ шт.</span>
                   </div>
                   <div class="product-price__note"><?php the_field( 'product_cost_note' ); ?></div>
                 </div>
+
                 <div class="product-colors">
                   <div class="product-colors__title">Возможные расцветки:</div>
 
@@ -166,6 +175,7 @@ get_header();
                   </ul>
 
                 </div>
+
                 <div class="product-controls">
                   <a class="btn btn--primary" href="">Рассчитать</a>
                   <a class="btn" href="">Купить в рассрочку</a>
@@ -211,7 +221,7 @@ get_header();
               <div class="goods-tile">
                 <div class="goods-tile__inner">
                   <a class="goods-tile__picture" href="">
-                    <img src="assets/img/content/product-1.jpg" title="" alt="" />
+                    <img src="<?php bloginfo('template_url'); ?>/assets/img/content/product-1.jpg" title="" alt="" />
                   </a>
                   <a class="goods-tile__heading" href="" title="GEALAN 8000 IQ 4K Стоимость за окно размером 1300х1400">
                     <span class="goods-tile__title">GEALAN 8000 IQ 4K</span>
@@ -232,7 +242,7 @@ get_header();
               <div class="goods-tile">
                 <div class="goods-tile__inner">
                   <a class="goods-tile__picture" href="">
-                    <img src="assets/img/content/product-1.jpg" title="" alt="" />
+                    <img src="<?php bloginfo('template_url'); ?>/assets/img/content/product-1.jpg" title="" alt="" />
                   </a>
                   <a class="goods-tile__heading" href="" title="GEALAN 8000 IQ 5K Стоимость за окно размером 1300х1400">
                     <span class="goods-tile__title">GEALAN 8000 IQ 5K</span>

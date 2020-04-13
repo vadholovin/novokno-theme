@@ -9,6 +9,7 @@
   <link rel="profile" href="https://gmpg.org/xfn/11">
 
   <?php wp_head(); ?>
+  <script>var ajaxurl = '<?php echo site_url() ?>/wp-admin/admin-ajax.php';</script>
 </head>
 
 <body <?php body_class(); ?>>

@@ -1,6 +1,6 @@
 <?php
 if( have_rows('info_slide', 'option') ) : ?>
-<div class="info">
+<div class="info lozad" data-background-image="<?php bloginfo('template_url'); ?>/assets/img/content/ring.png">
   <div class="container">
     <div class="swiper-container swiper--info-slider info-slider js-info-slider" id="info-slider">
       <div class="swiper-wrapper">
@@ -18,7 +18,7 @@ if( have_rows('info_slide', 'option') ) : ?>
               </div>
               <div class="grid__col grid__col-sm-6">
                 <figure class="info-slide__picture">
-                  <img src="<?php the_sub_field( 'img' ); ?>" width="426" alt="">
+                  <img src="<?php the_sub_field( 'img' ); ?>" alt="">
                 </figure>
               </div>
             </div>

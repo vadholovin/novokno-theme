@@ -23,14 +23,22 @@ get_header();
             <div class="articles__list">
               <div class="grid articles__grid">
                 <?php
-                while ( have_posts() ) : the_post(); ?>
-                  <?php get_template_part( 'template-parts/post/card-article' ); ?>
-                <?php endwhile; ?>
+                while ( have_posts() ) {
+                  the_post();
+                  get_template_part( 'template-parts/post/card-article' );
+                }
+                ?>
                 
                 <div class="btn__container grid__col-12">
                 <?php
                 if (  $wp_query->max_num_pages > 1 ) : ?>
-                  <button class="btn btn--wider js-more-articles">Загрузить еще</button>
+                  
+                  <button class="btn btn--wider js-more-posts"
+                          data-current="1"
+                          data-ajax-posts='<?php echo serialize( $wp_query->query_vars ); ?>'
+                          data-max-pages='<?php echo $wp_query->max_num_pages; ?>'>
+                    Загрузить еще
+                  </button>
                 <?php endif; ?>
                 </div>
               </div>

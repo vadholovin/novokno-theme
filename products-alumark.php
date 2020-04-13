@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Продукция Rehau
+ * Template Name: Продукция Alumark
  */
 
 get_header();
@@ -20,7 +20,7 @@ get_header();
           array(
             'taxonomy' => 'maker',
             'field'    => 'slug',
-            'terms'    => 'rehau',
+            'terms'    => 'alumark',
           ),
         ),
       );
@@ -133,46 +133,26 @@ get_header();
                   <h1 class="product__title"><?php the_field( 'product_title' ); ?></h1>
                   <p class="product__subtitle"><?php the_field( 'product_subtitle' ); ?></p>
                 </div>
+
+                <?php if ( get_field( 'product_cost' ) ) : ?>
                 <div class="product-price">
                   <div class="product-price__cost">
                     <?php
-                    if ( get_field( 'product_cost' ) ) {
                     $price = get_field( 'product_cost' );
                     $price = number_format($price, 0, '.', ' ');
                     echo $price;
-                    }
                     ?>
                     Р <span class="product-price__cost--small">/ шт.</span>
                   </div>
                   <div class="product-price__note"><?php the_field( 'product_cost_note' ); ?></div>
                 </div>
+                <?php endif; ?>
+
                 <div class="product-colors">
-                  <div class="product-colors__title">Возможные расцветки:</div>
-
-                  <ul class="product-colors__list">
-                    <?php
-                    $terms = get_the_terms( $post->ID, 'color' );
-
-                    foreach( $terms as $term ) :
-                      $image = get_field('color_img', $term);
-                    ?>
-                    <li class="product-colors__item">
-                      <input class="product-colors__input hidden-visually"
-                            type="radio"
-                            name="product-color"
-                            id="<?= $term->slug . $product_counter; ?>"
-                            value="<?= $term->slug . $product_counter; ?>">
-                      <label class="product-colors__label"
-                            for="<?= $term->slug . $product_counter; ?>"
-                            style="background-image: url(<?= $image; ?>);"
-                            data-tippy-content="<?= $term->name; ?>"></label>
-                    </li>
-                    <?php
-                    endforeach;
-                    ?>
-                  </ul>
-
+                  <div class="product-colors__title">Цвета:</div>
+                  <p class="product__subtitle">Возможна покраска в любой цвет по RAL</p>
                 </div>
+
                 <div class="product-controls">
                   <a class="btn btn--primary" href="">Рассчитать</a>
                   <a class="btn" href="">Купить в рассрочку</a>

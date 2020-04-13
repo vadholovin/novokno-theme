@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Продукция Rehau
+ * Template Name: Продукция Gealan
  */
 
 get_header();
@@ -20,7 +20,7 @@ get_header();
           array(
             'taxonomy' => 'maker',
             'field'    => 'slug',
-            'terms'    => 'rehau',
+            'terms'    => 'gealan',
           ),
         ),
       );

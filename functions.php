@@ -368,7 +368,7 @@ function novokno_register_post_types() {
 		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
 		'rest_base'           => null, // $post_type. C WP 4.7
 		'menu_position'       => null,
-		'menu_icon'           => 'dashicons-format-status',
+		'menu_icon'           => 'dashicons-portfolio',
 		//'capability_type'   => 'post',
 		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
 		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
@@ -409,7 +409,7 @@ function novokno_register_post_types() {
 		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
 		'rest_base'           => null, // $post_type. C WP 4.7
 		'menu_position'       => null,
-		'menu_icon'           => 'dashicons-format-status',
+		'menu_icon'           => 'dashicons-tablet',
 		'capability_type'   => 'post',
 		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
 		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
@@ -450,7 +450,7 @@ function novokno_register_post_types() {
 		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
 		'rest_base'           => null, // $post_type. C WP 4.7
 		'menu_position'       => null,
-		'menu_icon'           => 'dashicons-format-status',
+		'menu_icon'           => 'dashicons-tablet',
 		'capability_type'   => 'post',
 		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
 		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
@@ -491,7 +491,7 @@ function novokno_register_post_types() {
 		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
 		'rest_base'           => null, // $post_type. C WP 4.7
 		'menu_position'       => null,
-		'menu_icon'           => 'dashicons-format-status',
+		'menu_icon'           => 'dashicons-tablet',
 		'capability_type'   => 'post',
 		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
 		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
@@ -504,7 +504,7 @@ function novokno_register_post_types() {
   ) );
 
 
-  // Windows for dacha
+  // Product - Windows
   register_post_type('product', array(
 		'label'  => null,
 		'labels' => array(
@@ -532,7 +532,7 @@ function novokno_register_post_types() {
 		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
 		'rest_base'           => null, // $post_type. C WP 4.7
 		'menu_position'       => null,
-		'menu_icon'           => 'dashicons-format-status',
+		'menu_icon'           => 'dashicons-tablet',
 		'capability_type'   => 'post',
 		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
 		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
@@ -543,31 +543,6 @@ function novokno_register_post_types() {
 		'rewrite'             => array('slug' => 'products', 'with_front' => false ),
 		'query_var'           => true,
   ) );
-
-
-  register_taxonomy( 'brand', array( 'window-flat', 'window-house', 'window-dacha' ), array(
-    'hierarchical' => true,
-    'label' => 'Бренды',
-    'singular_label' => 'Бренд',
-    'rewrite' => array( 'slug' => 'brand', 'with_front'=> false )
-    )
-  );
-
-  register_taxonomy( 'maker', array( 'product' ), array(
-    'hierarchical' => true,
-    'label' => 'Бренды',
-    'singular_label' => 'Бренд',
-    'rewrite' => array( 'slug' => 'brand', 'with_front'=> false )
-    )
-  );
-
-  register_taxonomy( 'color', array( 'product' ), array(
-    'hierarchical' => true,
-    'label' => 'Расцветки',
-    'singular_label' => 'Цвет',
-    'rewrite' => array( 'slug' => 'color', 'with_front'=> false )
-    )
-  );
 
 
   // Doors
@@ -598,7 +573,7 @@ function novokno_register_post_types() {
 		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
 		'rest_base'           => null, // $post_type. C WP 4.7
 		'menu_position'       => null,
-		'menu_icon'           => 'dashicons-format-status',
+		'menu_icon'           => 'dashicons-tablet',
 		'capability_type'   => 'post',
 		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
 		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
@@ -610,13 +585,333 @@ function novokno_register_post_types() {
 		'query_var'           => true,
   ) );
 
-  register_taxonomy( 'categories', array('door'), array(
-    'hierarchical' => true,
-    'label' => 'Категории',
-    'singular_label' => 'Категория',
-    'rewrite' => array( 'slug' => 'categories', 'with_front'=> false )
-    )
-  );
+
+  // Жалюзи
+  register_post_type('jalousie', array(
+		'label'  => null,
+		'labels' => array(
+			'name'               => 'Жалюзи', // основное название для типа записи
+			'singular_name'      => 'Жалюзи', // название для одной записи этого типа
+			'add_new'            => 'Добавить аксессуар', // для добавления новой записи
+			'add_new_item'       => 'Добавление аксессуара', // заголовка у вновь создаваемой записи в админ-панели.
+			'edit_item'          => 'Редактирование аксессуара', // для редактирования типа записи
+			'new_item'           => 'Новый аксессуар', // текст новой записи
+			'view_item'          => 'Смотреть аксессуар', // для просмотра записи этого типа.
+			'search_items'       => 'Искать аксессуар', // для поиска по этим типам записи
+			'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
+			'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
+			'parent_item_colon'  => '', // для родителей (у древовидных типов)
+			'menu_name'          => 'Жалюзи', // название меню
+		),
+		'description'         => '',
+		'public'              => true,
+		'publicly_queryable'  => true, // зависит от public
+		'exclude_from_search' => true, // зависит от public
+		'show_ui'             => true, // зависит от public
+		'show_in_menu'        => true, // показывать ли в меню адмнки
+		'show_in_admin_bar'   => true, // по умолчанию значение show_in_menu
+		'show_in_nav_menus'   => true, // зависит от public
+		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
+		'rest_base'           => null, // $post_type. C WP 4.7
+		'menu_position'       => null,
+		'menu_icon'           => 'dashicons-layout',
+		'capability_type'   => 'post',
+		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
+		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
+		'hierarchical'        => true,
+		'supports'            => array( 'title', 'thumbnail' ),
+		'taxonomies'          => array( 'colors' ),
+		'has_archive'         => true,
+		'rewrite'             => array('slug' => 'jalousies', 'with_front' => false ),
+		'query_var'           => true,
+  ) );
+
+
+  // Доводчик
+  register_post_type('closer', array(
+		'label'  => null,
+		'labels' => array(
+			'name'               => 'Доводчики', // основное название для типа записи
+			'singular_name'      => 'Доводчик', // название для одной записи этого типа
+			'add_new'            => 'Добавить аксессуар', // для добавления новой записи
+			'add_new_item'       => 'Добавление аксессуара', // заголовка у вновь создаваемой записи в админ-панели.
+			'edit_item'          => 'Редактирование аксессуара', // для редактирования типа записи
+			'new_item'           => 'Новый аксессуар', // текст новой записи
+			'view_item'          => 'Смотреть аксессуар', // для просмотра записи этого типа.
+			'search_items'       => 'Искать аксессуар', // для поиска по этим типам записи
+			'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
+			'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
+			'parent_item_colon'  => '', // для родителей (у древовидных типов)
+			'menu_name'          => 'Доводчики', // название меню
+		),
+		'description'         => '',
+		'public'              => true,
+		'publicly_queryable'  => true, // зависит от public
+		'exclude_from_search' => true, // зависит от public
+		'show_ui'             => true, // зависит от public
+		'show_in_menu'        => true, // показывать ли в меню адмнки
+		'show_in_admin_bar'   => true, // по умолчанию значение show_in_menu
+		'show_in_nav_menus'   => true, // зависит от public
+		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
+		'rest_base'           => null, // $post_type. C WP 4.7
+		'menu_position'       => null,
+		'menu_icon'           => 'dashicons-layout',
+		'capability_type'   => 'post',
+		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
+		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
+		'hierarchical'        => true,
+		'supports'            => array( 'title', 'thumbnail' ),
+		'taxonomies'          => array( 'colors' ),
+		'has_archive'         => true,
+		'rewrite'             => array('slug' => 'closers', 'with_front' => false ),
+		'query_var'           => true,
+  ) );
+
+
+  // Ручки для окон
+  register_post_type('handle', array(
+		'label'  => null,
+		'labels' => array(
+			'name'               => 'Ручки для окон', // основное название для типа записи
+			'singular_name'      => 'Ручка для окон', // название для одной записи этого типа
+			'add_new'            => 'Добавить аксессуар', // для добавления новой записи
+			'add_new_item'       => 'Добавление аксессуара', // заголовка у вновь создаваемой записи в админ-панели.
+			'edit_item'          => 'Редактирование аксессуара', // для редактирования типа записи
+			'new_item'           => 'Новый аксессуар', // текст новой записи
+			'view_item'          => 'Смотреть аксессуар', // для просмотра записи этого типа.
+			'search_items'       => 'Искать аксессуар', // для поиска по этим типам записи
+			'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
+			'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
+			'parent_item_colon'  => '', // для родителей (у древовидных типов)
+			'menu_name'          => 'Ручки для окон', // название меню
+		),
+		'description'         => '',
+		'public'              => true,
+		'publicly_queryable'  => true, // зависит от public
+		'exclude_from_search' => true, // зависит от public
+		'show_ui'             => true, // зависит от public
+		'show_in_menu'        => true, // показывать ли в меню адмнки
+		'show_in_admin_bar'   => true, // по умолчанию значение show_in_menu
+		'show_in_nav_menus'   => true, // зависит от public
+		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
+		'rest_base'           => null, // $post_type. C WP 4.7
+		'menu_position'       => null,
+		'menu_icon'           => 'dashicons-layout',
+		'capability_type'   => 'post',
+		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
+		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
+		'hierarchical'        => true,
+		'supports'            => array( 'title', 'thumbnail' ),
+		'taxonomies'          => array( 'colors' ),
+		'has_archive'         => true,
+		'rewrite'             => array('slug' => 'handles', 'with_front' => false ),
+		'query_var'           => true,
+  ) );
+
+
+  // Ограничители
+  register_post_type('limiter', array(
+		'label'  => null,
+		'labels' => array(
+			'name'               => 'Ограничители', // основное название для типа записи
+			'singular_name'      => 'Ограничитель', // название для одной записи этого типа
+			'add_new'            => 'Добавить аксессуар', // для добавления новой записи
+			'add_new_item'       => 'Добавление аксессуара', // заголовка у вновь создаваемой записи в админ-панели.
+			'edit_item'          => 'Редактирование аксессуара', // для редактирования типа записи
+			'new_item'           => 'Новый аксессуар', // текст новой записи
+			'view_item'          => 'Смотреть аксессуар', // для просмотра записи этого типа.
+			'search_items'       => 'Искать аксессуар', // для поиска по этим типам записи
+			'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
+			'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
+			'parent_item_colon'  => '', // для родителей (у древовидных типов)
+			'menu_name'          => 'Ограничители', // название меню
+		),
+		'description'         => '',
+		'public'              => true,
+		'publicly_queryable'  => true, // зависит от public
+		'exclude_from_search' => true, // зависит от public
+		'show_ui'             => true, // зависит от public
+		'show_in_menu'        => true, // показывать ли в меню адмнки
+		'show_in_admin_bar'   => true, // по умолчанию значение show_in_menu
+		'show_in_nav_menus'   => true, // зависит от public
+		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
+		'rest_base'           => null, // $post_type. C WP 4.7
+		'menu_position'       => null,
+		'menu_icon'           => 'dashicons-layout',
+		'capability_type'   => 'post',
+		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
+		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
+		'hierarchical'        => true,
+		'supports'            => array( 'title', 'thumbnail' ),
+		'taxonomies'          => array( 'colors' ),
+		'has_archive'         => false,
+		'rewrite'             => array('slug' => 'limiters', 'with_front' => false ),
+		'query_var'           => true,
+  ) );
+
+
+  // Наборы по уходу за окнами
+  register_post_type('carekit', array(
+		'label'  => null,
+		'labels' => array(
+			'name'               => 'Наборы по уходу за окнами', // основное название для типа записи
+			'singular_name'      => 'Набор по уходу', // название для одной записи этого типа
+			'add_new'            => 'Добавить аксессуар', // для добавления новой записи
+			'add_new_item'       => 'Добавление аксессуара', // заголовка у вновь создаваемой записи в админ-панели.
+			'edit_item'          => 'Редактирование аксессуара', // для редактирования типа записи
+			'new_item'           => 'Новый аксессуар', // текст новой записи
+			'view_item'          => 'Смотреть аксессуар', // для просмотра записи этого типа.
+			'search_items'       => 'Искать аксессуар', // для поиска по этим типам записи
+			'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
+			'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
+			'parent_item_colon'  => '', // для родителей (у древовидных типов)
+			'menu_name'          => 'Наборы по уходу за окнами', // название меню
+		),
+		'description'         => '',
+		'public'              => true,
+		'publicly_queryable'  => true, // зависит от public
+		'exclude_from_search' => true, // зависит от public
+		'show_ui'             => true, // зависит от public
+		'show_in_menu'        => true, // показывать ли в меню адмнки
+		'show_in_admin_bar'   => true, // по умолчанию значение show_in_menu
+		'show_in_nav_menus'   => true, // зависит от public
+		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
+		'rest_base'           => null, // $post_type. C WP 4.7
+		'menu_position'       => null,
+		'menu_icon'           => 'dashicons-layout',
+		'capability_type'   => 'post',
+		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
+		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
+		'hierarchical'        => true,
+		'supports'            => array( 'title', 'thumbnail' ),
+		'taxonomies'          => array( 'colors' ),
+		'has_archive'         => true,
+		'rewrite'             => array('slug' => 'carekits', 'with_front' => false ),
+		'query_var'           => true,
+  ) );
+
+
+  // Воздушные клапаны
+  register_post_type('air-valve', array(
+		'label'  => null,
+		'labels' => array(
+			'name'               => 'Воздушные клапаны', // основное название для типа записи
+			'singular_name'      => 'Клапан', // название для одной записи этого типа
+			'add_new'            => 'Добавить аксессуар', // для добавления новой записи
+			'add_new_item'       => 'Добавление аксессуара', // заголовка у вновь создаваемой записи в админ-панели.
+			'edit_item'          => 'Редактирование аксессуара', // для редактирования типа записи
+			'new_item'           => 'Новый аксессуар', // текст новой записи
+			'view_item'          => 'Смотреть аксессуар', // для просмотра записи этого типа.
+			'search_items'       => 'Искать аксессуар', // для поиска по этим типам записи
+			'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
+			'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
+			'parent_item_colon'  => '', // для родителей (у древовидных типов)
+			'menu_name'          => 'Воздушные клапаны', // название меню
+		),
+		'description'         => '',
+		'public'              => true,
+		'publicly_queryable'  => true, // зависит от public
+		'exclude_from_search' => true, // зависит от public
+		'show_ui'             => true, // зависит от public
+		'show_in_menu'        => true, // показывать ли в меню адмнки
+		'show_in_admin_bar'   => true, // по умолчанию значение show_in_menu
+		'show_in_nav_menus'   => true, // зависит от public
+		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
+		'rest_base'           => null, // $post_type. C WP 4.7
+		'menu_position'       => null,
+		'menu_icon'           => 'dashicons-layout',
+		'capability_type'   => 'post',
+		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
+		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
+		'hierarchical'        => true,
+		'supports'            => array( 'title', 'thumbnail' ),
+		'taxonomies'          => array( 'colors' ),
+		'has_archive'         => true,
+		'rewrite'             => array('slug' => 'air-valves', 'with_front' => false ),
+		'query_var'           => true,
+  ) );
+
+
+  // Подоконники
+  register_post_type('windowsill', array(
+		'label'  => null,
+		'labels' => array(
+			'name'               => 'Подоконники', // основное название для типа записи
+			'singular_name'      => 'Подоконник', // название для одной записи этого типа
+			'add_new'            => 'Добавить аксессуар', // для добавления новой записи
+			'add_new_item'       => 'Добавление аксессуара', // заголовка у вновь создаваемой записи в админ-панели.
+			'edit_item'          => 'Редактирование аксессуара', // для редактирования типа записи
+			'new_item'           => 'Новый аксессуар', // текст новой записи
+			'view_item'          => 'Смотреть аксессуар', // для просмотра записи этого типа.
+			'search_items'       => 'Искать аксессуар', // для поиска по этим типам записи
+			'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
+			'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
+			'parent_item_colon'  => '', // для родителей (у древовидных типов)
+			'menu_name'          => 'Подоконники', // название меню
+		),
+		'description'         => '',
+		'public'              => true,
+		'publicly_queryable'  => true, // зависит от public
+		'exclude_from_search' => true, // зависит от public
+		'show_ui'             => true, // зависит от public
+		'show_in_menu'        => true, // показывать ли в меню адмнки
+		'show_in_admin_bar'   => true, // по умолчанию значение show_in_menu
+		'show_in_nav_menus'   => true, // зависит от public
+		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
+		'rest_base'           => null, // $post_type. C WP 4.7
+		'menu_position'       => null,
+		'menu_icon'           => 'dashicons-layout',
+		'capability_type'   => 'post',
+		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
+		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
+		'hierarchical'        => true,
+		'supports'            => array( 'title', 'thumbnail' ),
+		'taxonomies'          => array( 'colors' ),
+		'has_archive'         => true,
+		'rewrite'             => array('slug' => 'windowsill', 'with_front' => false ),
+		'query_var'           => true,
+  ) );
+
+
+  // Рулонные шторы
+  register_post_type('roller-blind', array(
+		'label'  => null,
+		'labels' => array(
+			'name'               => 'Рулонные шторы', // основное название для типа записи
+			'singular_name'      => 'Рулонные шторы', // название для одной записи этого типа
+			'add_new'            => 'Добавить аксессуар', // для добавления новой записи
+			'add_new_item'       => 'Добавление аксессуара', // заголовка у вновь создаваемой записи в админ-панели.
+			'edit_item'          => 'Редактирование аксессуара', // для редактирования типа записи
+			'new_item'           => 'Новый аксессуар', // текст новой записи
+			'view_item'          => 'Смотреть аксессуар', // для просмотра записи этого типа.
+			'search_items'       => 'Искать аксессуар', // для поиска по этим типам записи
+			'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
+			'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
+			'parent_item_colon'  => '', // для родителей (у древовидных типов)
+			'menu_name'          => 'Рулонные шторы', // название меню
+		),
+		'description'         => '',
+		'public'              => true,
+		'publicly_queryable'  => true, // зависит от public
+		'exclude_from_search' => true, // зависит от public
+		'show_ui'             => true, // зависит от public
+		'show_in_menu'        => true, // показывать ли в меню адмнки
+		'show_in_admin_bar'   => true, // по умолчанию значение show_in_menu
+		'show_in_nav_menus'   => true, // зависит от public
+		'show_in_rest'        => true, // добавить в REST API. C WP 4.7
+		'rest_base'           => null, // $post_type. C WP 4.7
+		'menu_position'       => null,
+		'menu_icon'           => 'dashicons-layout',
+		'capability_type'   => 'post',
+		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
+		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
+		'hierarchical'        => true,
+		'supports'            => array( 'title', 'thumbnail' ),
+		'taxonomies'          => array( 'colors' ),
+		'has_archive'         => true,
+		'rewrite'             => array('slug' => 'roller-blinds', 'with_front' => false ),
+		'query_var'           => true,
+  ) );
 
 
   // Reviews
@@ -660,6 +955,52 @@ function novokno_register_post_types() {
   ) );
 
 
+  register_taxonomy( 'brand', array( 'window-flat', 'window-house', 'window-dacha' ), array(
+    'hierarchical' => true,
+    'label' => 'Бренды',
+    'singular_label' => 'Бренд',
+    'rewrite' => array( 'slug' => 'brand', 'with_front'=> false )
+    )
+  );
+
+  register_taxonomy( 'maker', array( 'product' ), array(
+    'hierarchical' => true,
+    'label' => 'Бренды',
+    'singular_label' => 'Бренд',
+    'rewrite' => array( 'slug' => 'brand', 'with_front'=> false )
+    )
+  );
+
+  register_taxonomy(
+    'color',
+    array(
+      'product',
+      'jalousie',
+      'closer',
+      'handle',
+      'limiter',
+      'carekit',
+      'air-valve',
+      'windowsill',
+      'roller-blind'
+    ),
+    array(
+      'hierarchical' => true,
+      'label' => 'Расцветки',
+      'singular_label' => 'Цвет',
+      'rewrite' => array( 'slug' => 'color', 'with_front'=> false )
+    )
+  );
+
+  register_taxonomy( 'categories', array('door'), array(
+    'hierarchical' => true,
+    'label' => 'Категории',
+    'singular_label' => 'Категория',
+    'rewrite' => array( 'slug' => 'categories', 'with_front'=> false )
+    )
+  );
+
+
 }
 add_action( 'init', 'novokno_register_post_types' );
 
@@ -672,55 +1013,92 @@ add_filter('wpcf7_autop_or_not', '__return_false');
 /**
  * Ajax loadmore
  */
-function vh_load_more_scripts() {
-
-  global $wp_query;
-
-  // register our main script but do not enqueue it yet
-  wp_register_script('vh_loadmore', get_stylesheet_directory_uri(). '/jx/jx-loadmore.js', array('jquery'));
-
-  // we have to pass parameters to jx-loadmore.js
-  // you can define variables directly in your HTML or in wp_localize_script()
-  wp_localize_script('vh_loadmore', 'vh_loadmore_params', array(
-    'ajaxurl' => admin_url( 'admin-ajax.php' ), // WordPress AJAX
-    'posts' => json_encode($wp_query->query_vars), // everything about your loop is here
-    'current_page' => get_query_var('paged') ? get_query_var('paged') : 1,
-    'max_page' => $wp_query->max_num_pages
-  ));
-
-  wp_enqueue_script( 'vh_loadmore' );
-  wp_script_add_data( 'vh_loadmore', 'defer', true );
+function be_load_more_js() {
+	wp_enqueue_script( 'be-load-more', get_stylesheet_directory_uri() . '/jx/loadmore.js', array( 'jquery' ), '1.0', true );
 }
 
-add_action('wp_enqueue_scripts', 'vh_load_more_scripts');
+add_action( 'wp_enqueue_scripts', 'be_load_more_js' );
 
 
-function vh_loadmore_ajax_handler() {
-
-	// prepare our arguments for the query
-	$args = json_decode( stripslashes( $_POST['query'] ), true );
-	$args['paged'] = $_POST['page']; // we need next page to be loaded
+function be_ajax_load_more() {
+  $args = unserialize( stripslashes( $_POST['query'] ) );
+	$args['post_type'] = isset( $args['post_type'] ) ? esc_attr( $args['post_type'] ) : 'post';
+	$args['paged'] = esc_attr( $_POST['page'] ) + 1;
 	$args['post_status'] = 'publish';
 
-	// it is always better to use WP_Query but not here
-	query_posts( $args );
 
-	if( have_posts() ) :
+  query_posts( $args );
+  
+  if ( have_posts() ) : while( have_posts() ) : the_post();
 
-		// run the loop
-		while( have_posts() ): the_post();
+      if ( is_home() ) :
 
-      if ( is_home() || is_page( 'projects' ) ) :
         get_template_part( 'template-parts/post/card-article' );
-			// for the test purposes comment the line above and uncomment the below one
-      // the_title();
+
+      elseif ( $args['post_type'] == 'reviews' ) :
+        ?>
+        <div class="grid__col grid__col-md-4 grid__col-xs-6">
+        <?php get_template_part( 'template-parts/post/review' ); ?>
+        </div>
+        <?php
+      elseif (
+        $args['post_type'] == 'jalousie' ||
+        $args['post_type'] == 'closer' ||
+        $args['post_type'] == 'handle' ||
+        $args['post_type'] == 'limiter' ||
+        $args['post_type'] == 'carekit' ||
+        $args['post_type'] == 'air-valve' ||
+        $args['post_type'] == 'windowsill' ||
+        $args['post_type'] == 'roller-blind'
+        
+        ) :
+        ?>
+        <div class="grid__col grid__col-md-4 grid__col-xs-6">
+        <?php get_template_part( 'template-parts/post/card-product' ); ?>
+        </div>
+        <?php
       endif;
 
-		endwhile;
-
-	endif;
-	die; // here we exit the script and even no wp_reset_query() required!
+  endwhile; endif; wp_reset_postdata();
+  die();
 }
 
-add_action('wp_ajax_loadmore', 'vh_loadmore_ajax_handler'); // wp_ajax_{action}
-add_action('wp_ajax_nopriv_loadmore', 'vh_loadmore_ajax_handler'); // wp_ajax_nopriv_{action}
+add_action('wp_ajax_loadmore', 'be_ajax_load_more');
+add_action('wp_ajax_nopriv_loadmore', 'be_ajax_load_more');
+
+
+/**
+ * 
+ */
+// add_filter( 'accessory_template', function( $template_path ) {
+
+//   $cpt = array(
+//     'jalousie',
+//     'closer',
+//     'handle',
+//     'limiter',
+//     'carekit',
+//     'air-valve',
+//     'windowsill',
+//     'roller-blind',
+//   );
+
+//   return in_array( get_queried_object()->post_type, $cpt, true )
+//     ? locate_template( array( 'single-accessories.php' ) )
+//     : $template_path;
+// } );
+
+
+add_filter( 'template_include', 'wpsites_cpt_archive_page_template', 99 );
+
+function wpsites_cpt_archive_page_template( $template ) {
+
+    if ( is_post_type_archive( array('jalousie', 'closer', 'handle', 'limiter', 'carekit', 'air-valve', 'windowsill', 'roller-blind') )  ) {
+        $new_template = locate_template( array( 'arch-accessories.php' ) );
+        if ( '' != $new_template ) {
+            return $new_template ;
+        }
+    }
+
+    return $template;
+}

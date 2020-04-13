@@ -56,7 +56,7 @@ $TERMS = get_terms( array(
                   role="tabpanel"
                   data-tab="<?= $post_type; ?>"
                   data-tab-group="goods">
-                <ul class="tabs goods-secondary-tabs">
+                <ul class="tabs goods-secondary-tabs goods-secondary-tabs--windows">
                   <?php
                   if ( $TERMS && ! is_wp_error($terms) ) :
                     foreach ( $TERMS as $term_key => $term ) : ?>
@@ -87,7 +87,7 @@ $TERMS = get_terms( array(
                         'post_type'       => $post_type,
                         'posts_per_page'  => -1,
                         'meta_key'			=> 'goods_price',
-                        'orderby'			=> 'meta_value',
+                        'orderby'			=> 'meta_value_num',
                         'order'				=> 'ASC',
                         'tax_query'       => array(
                           array(

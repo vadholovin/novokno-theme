@@ -14,42 +14,45 @@ get_header();
             <h1 class="heading__title">Отзывы наших клиентов</h1>
             <p class="heading__subtitle">Доверьте свою работу профессионалам</p>
           </div>
+          <?php
+          $args = array(
+            'posts_per_page'  => 6,
+            'post_type'       => 'reviews',
+          );
+
+          $reviews = new WP_Query( $args );
+          query_posts( $args );
+          
+          if ( $reviews->have_posts() ) :
+          ?>
           <div class="grid reviews-list">
             <?php
-            $args = array(
-              'numberposts'    => 6,
-              'post_type'      => 'reviews',
-            );
-
-            $q = get_posts( $args ); ?>
-            <script>
-            var posts_projects = '<?php echo serialize( $q->query_vars ) ?>',
-                current_page_projects = <?php echo $q->query_vars['paged'] ?>,
-                max_page_projects = <?php echo $q->max_num_pages ?>
-            </script>
-            <?php
-            foreach ( $q as $post ) : setup_postdata( $post ); ?>
+            while ( $reviews->have_posts() ) : $reviews->the_post();
+            ?>
             <div class="grid__col grid__col-md-4 grid__col-xs-6">
-              <div class="reviews-item">
-                <figure class="reviews-item__picture">
-                  <img src="<?php the_field( 'review_photo' ); ?>"
-                       alt="<?php the_field( 'review_name' ); ?>">
-                </figure>
-                <div class="reviews-item__text"><?php the_field( 'review_text' ); ?></div>
-                <div class="reviews-item__name"><?php the_field( 'review_name' ); ?></div>
-                <div class="reviews-item__city"><?php the_field( 'review_city' ); ?></div>
-              </div>
+              <?php get_template_part( 'template-parts/post/review' ); ?>
             </div>
-
-            <?php endforeach; ?>
+            <?php
+            endwhile;
+            ?>
 
             <div class="btn__container grid__col-12">
             <?php
-            if (  $q->max_num_pages > 1 ) : ?>
-              <button class="btn btn--wider js-more-reviews">Загрузить еще</button>
-            <?php endif; ?>
+            if (  $reviews->max_num_pages > 1 ) : ?>
+              <button class="btn btn--wider js-more-posts"
+                      data-current="1"
+                      data-ajax-posts='<?php echo esc_attr( serialize( $reviews->query_vars ) ); ?>'
+                      data-max-pages='<?php echo $reviews->max_num_pages; ?>'>
+                Загрузить еще
+              </button>
+            <?php
+            wp_reset_postdata();
+            endif; ?>
             </div>
           </div>
+          <?php
+          endif;
+          ?>
         </div>
       </section>
       <section class="reviews-form">
