@@ -17,6 +17,10 @@ $TERMS = get_terms( array(
   'order'         => 'ASC',
   'hide_empty'    => true,
 ) );
+
+if ( isset( $_GET['id']) ) {
+  $ID = $_GET['id'];
+}
 ?>
 
   <main class="wrapper">
@@ -32,9 +36,13 @@ $TERMS = get_terms( array(
               <?php
               $post_types_counter = 0;
 
-              foreach ( $POST_TYPES as $post_type => $post_type_value ) : ?>
+              foreach ( $POST_TYPES as $post_type => $post_type_value ) :
+                $case1 = $post_types_counter == 0 && !isset( $_GET['id']);
+                $case2 = $post_types_counter == 1 && isset( $_GET['id']) && $ID == 'v-dom';
+                $case3 = $post_types_counter == 2 && isset( $_GET['id']) && $ID == 'na-dachu';
+              ?>
               <li class="tabs__tab-wrap">
-                <button class="tab <?php if ( $post_types_counter == 0 ) echo 'is-active'; ?>"
+                <button class="tab <?php if ( $case1 || $case2 || $case3 ) echo 'is-active'; ?>"
                         role="tab"
                         data-tab-target="<?= $post_type; ?>">
                         <?= $post_type_value; ?>
@@ -50,9 +58,13 @@ $TERMS = get_terms( array(
               <?php
               $post_types_counter = 0;
               // Loop level 1
-              foreach ( $POST_TYPES as $post_type => $post_type_value ) : ?>
+              foreach ( $POST_TYPES as $post_type => $post_type_value ) :
+                $case1 = $post_types_counter == 0 && !isset( $_GET['id']);
+                $case2 = $post_types_counter == 1 && isset( $_GET['id']) && $ID == 'v-dom';
+                $case3 = $post_types_counter == 2 && isset( $_GET['id']) && $ID == 'na-dachu';
+              ?>
 
-              <div class="tabs-content__wrapper <?php if ( $post_types_counter == 0 ) echo 'is-active'; ?>"
+              <div class="tabs-content__wrapper <?php if ( $case1 || $case2 || $case3 ) echo 'is-active'; ?>"
                   role="tabpanel"
                   data-tab="<?= $post_type; ?>"
                   data-tab-group="goods">

@@ -19,7 +19,7 @@ if ( is_front_page()  || is_page( 'doors-calculator' )  || is_page( 'windows-cal
   </div>
 
 <?php
-elseif ( is_home() || is_page( 'projects' ) ) : ?>
+elseif ( is_home() || is_post_type_archive( 'projects' ) ) : ?>
 
 <div class="grid__col grid__col-sm-4 grid__col-6">
   <?php if ( is_page( 'projects' ) ) : ?>

@@ -15,6 +15,11 @@
 <body <?php body_class(); ?>>
   <?php wp_body_open(); ?>
 
+  <?php
+  // Ввыводит мобильную навигацию
+  get_template_part( 'template-parts/mobile-nav' );
+  ?>
+
   <header class="main-header js-header">
     <div class="main-header-top">
       <div class="container">
@@ -24,33 +29,15 @@
           </a>
 
           <nav class="main-nav main-header-top__menu main-menu main-nav--desktop" id="nav-2">
-            <ul class="main-nav__list">
-              <li class="main-nav__item">
-                <a class="main-nav__link" href="">О компании</a>
-              </li>
-              <li class="main-nav__item  main-nav__item--active">
-                <a class="main-nav__link" href="">Клиентам</a>
-                <div class="main-nav__sublist-wrapper main-nav__sublist-wrapper--lvl-2">
-                  <ul class="main-nav__list main-nav__list--lvl-2">
-                    <li class="main-nav__item main-nav__item--lvl-2">
-                      <a class="main-nav__link main-nav__link--lvl-2" href="">Полезн. информация</a>
-                    </li>
-                    <li class="main-nav__item main-nav__item--lvl-2">
-                      <a class="main-nav__link main-nav__link--lvl-2" href="">Написать отзыв</a>
-                    </li>
-                    <li class="main-nav__item main-nav__item--lvl-2">
-                      <a class="main-nav__link main-nav__link--lvl-2" href="">Записаться на замер</a>
-                    </li>
-                    <li class="main-nav__item main-nav__item--lvl-2">
-                      <a class="main-nav__link main-nav__link--lvl-2" href="">Рассрочка</a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="main-nav__item">
-                <a class="main-nav__link" href="">Контакты</a>
-              </li>
-            </ul>
+            <?php
+            $args = array(
+              'menu_class'        => 'main-nav__list',
+              'container'         => null,
+              'theme_location'    => 'header-top',
+            );
+
+            wp_nav_menu($args);
+            ?>
           </nav>
 
           <?php
@@ -96,52 +83,15 @@
             <img src="<?php bloginfo('template_url'); ?>/assets/img/general/logo.svg" alt="логотип Новые Окна" width="80">
           </a>
           <nav class="main-nav main-nav--desktop" id="nav-1">
-            <ul class="main-nav__list">
-              <li class="main-nav__item  main-nav__item--active">
-                <a class="main-nav__link" href="">Окна</a>
-                <div class="main-nav__sublist-wrapper main-nav__sublist-wrapper--lvl-2">
-                  <ul class="main-nav__list main-nav__list--lvl-2">
-                    <li class="main-nav__item main-nav__item--lvl-2">
-                      <a class="main-nav__link main-nav__link--lvl-2" href="">Окна в квартиру</a>
-                    </li>
-                    <li class="main-nav__item main-nav__item--lvl-2">
-                      <a class="main-nav__link main-nav__link--lvl-2" href="">Окна в дом</a>
-                    </li>
-                    <li class="main-nav__item main-nav__item--lvl-2">
-                      <a class="main-nav__link main-nav__link--lvl-2" href="">Окна на дачу</a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="main-nav__item">
-                <a class="main-nav__link" href="">Двери</a>
-                <div class="main-nav__sublist-wrapper main-nav__sublist-wrapper--lvl-2">
-                  <ul class="main-nav__list main-nav__list--lvl-2">
-                    <li class="main-nav__item main-nav__item--lvl-2">
-                      <a class="main-nav__link main-nav__link--lvl-2" href="">Двери в квартиру</a>
-                    </li>
-                    <li class="main-nav__item main-nav__item--lvl-2">
-                      <a class="main-nav__link main-nav__link--lvl-2" href="">Двери в дом</a>
-                    </li>
-                    <li class="main-nav__item main-nav__item--lvl-2">
-                      <a class="main-nav__link main-nav__link--lvl-2" href="">Двери на дачу</a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="main-nav__item">
-                <a class="main-nav__link" href="">Балконы и лоджии</a>
-              </li>
-              <li class="main-nav__item">
-                <a class="main-nav__link" href="">Услуги</a>
-              </li>
-              <li class="main-nav__item">
-                <a class="main-nav__link" href="">Продукция</a>
-              </li>
-              <li class="main-nav__item">
-                <a class="main-nav__link" href="">Аксессуары</a>
-              </li>
-            </ul>
+          <?php
+          $args = array(
+            'menu_class'        => 'main-nav__list',
+            'container'         => null,
+            'theme_location'    => 'header-bottom',
+          );
+
+          wp_nav_menu($args);
+          ?>
           </nav>
           <div class="main-header-bottom__controls">
             <a class="icon-link  icon-link--measure js-popup-measure" href="">
@@ -166,7 +116,3 @@
       </div>
     </div>
   </header>
-
-  <?php
-  // Ввыводит мобильную навигацию
-  get_template_part( 'template-parts/mobile-nav' );

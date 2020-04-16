@@ -9,7 +9,7 @@
   <div class="goods-tile__inner">
     <figure class="goods-tile__picture">
       <?php if ( has_post_thumbnail() ): ?>
-      <img data-src="<?php echo esc_url( get_the_post_thumbnail_url(get_the_ID(),'image-h-240') ); ?>"
+      <img data-src="<?php echo esc_url( get_the_post_thumbnail_url(get_the_ID(),'full') ); ?>"
           class="lozad"
           title="<?php the_field( 'goods_title' ) . ' ' . the_field( 'goods_subtitle' ); ?>"
           alt="" />

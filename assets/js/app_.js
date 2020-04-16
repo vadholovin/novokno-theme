@@ -11,15 +11,84 @@ document.addEventListener('DOMContentLoaded', function () {
 
 (function ($) {})(jQuery);
 /**
- * MENU
+ * MAIN NAV
  */
 
 
-jQuery(function ($) {
-  $('.menu-item-has-children').children('a').attr('href', 'javascript:void(0)');
-});
 document.addEventListener('DOMContentLoaded', function () {
-  var dropdowns = document.querySelectorAll('.mobile-menu .menu-item-has-children > a');
+  // Добавление/удаление модификаторов при фокусировке на ссылочном элементе
+  var linkClassName = 'main-nav__link';
+  var linkClassNameShowChild = 'main-nav__item--show-child';
+  var findLinkClassName = new RegExp(linkClassName); // Слежение за всплывшим событием focus (нужно добавить класс, показывающий потомков)
+
+  document.addEventListener('focus', function (event) {
+    // Если событие всплыло от одной из ссылок гл. меню
+    if (findLinkClassName.test(event.target.className)) {
+      // Добавим классы, показывающие списки вложенных уровней, на всех родителей
+      var parents = getParents(event.target, '.main-nav__item');
+
+      for (var i = 0; i < parents.length; i++) {
+        parents[i].classList.add(linkClassNameShowChild);
+      }
+    }
+  }, true); // Слежение за всплывшим событием blur (нужно убрать класс, показывающий потомков)
+
+  document.addEventListener('blur', function (event) {
+    // Если событие всплыло от одной из ссылок гл. меню
+    if (findLinkClassName.test(event.target.className)) {
+      // Уберем все классы, показывающие списки 2+ уровней
+      var parents = document.querySelectorAll('.' + linkClassNameShowChild);
+
+      for (var i = 0; i < parents.length; i++) {
+        parents[i].classList.remove(linkClassNameShowChild);
+      }
+    }
+  }, true);
+  /*! getParents.js | (c) 2017 Chris Ferdinandi | MIT License | http://github.com/cferdinandi/getParents */
+
+  /**
+   * Get all of an element's parent elements up the DOM tree
+   * @param  {Node}   elem     The element
+   * @param  {String} selector Selector to match against [optional]
+   * @return {Array}           The parent elements
+   */
+
+  var getParents = function getParents(elem, selector) {
+    // Element.matches() polyfill
+    if (!Element.prototype.matches) {
+      Element.prototype.matches = Element.prototype.matchesSelector || Element.prototype.mozMatchesSelector || Element.prototype.msMatchesSelector || Element.prototype.oMatchesSelector || Element.prototype.webkitMatchesSelector || function (s) {
+        var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+            i = matches.length;
+
+        while (--i >= 0 && matches.item(i) !== this) {}
+
+        return i > -1;
+      };
+    } // Setup parents array
+
+
+    var parents = []; // Get matching parent elements
+
+    for (; elem && elem !== document; elem = elem.parentNode) {
+      // Add matching parents to array
+      if (selector) {
+        if (elem.matches(selector)) {
+          parents.push(elem);
+        }
+      } else {
+        parents.push(elem);
+      }
+    }
+
+    return parents;
+  };
+});
+/**
+ * MOBILE MENU
+ */
+
+document.addEventListener('DOMContentLoaded', function () {
+  var dropdowns = document.querySelectorAll('.dropdown > a');
 
   var showDropdown = function showDropdown(e) {
     e.preventDefault();
@@ -153,39 +222,6 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       1024: {
         slidesPerView: 3,
-        spaceBetween: 26
-      }
-    }
-  });
-});
-document.addEventListener('DOMContentLoaded', function () {
-  var similar = new Swiper('.js-similar-slider', {
-    preloadImages: false,
-    lazy: true,
-    spaceBetween: 26,
-    slidesPerView: 3,
-    keyboard: {
-      enabled: true
-    },
-    navigation: {
-      nextEl: '.js-similar-swiper .swiper-button-next',
-      prevEl: '.js-similar-swiper .swiper-button-prev'
-    },
-    breakpoints: {
-      320: {
-        slidesPerView: 2,
-        spaceBetween: 0
-      },
-      500: {
-        slidesPerView: 2,
-        spaceBetween: 12
-      },
-      768: {
-        slidesPerView: 3,
-        spaceBetween: 26
-      },
-      1024: {
-        slidesPerView: 4,
         spaceBetween: 26
       }
     }

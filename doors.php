@@ -4,6 +4,10 @@
  */
 
 get_header();
+
+if ( isset( $_GET['id']) ) {
+  $ID = $_GET['id'];
+}
 ?>
 
   <main class="wrapper">
@@ -17,13 +21,13 @@ get_header();
             </div>
             <ul class="tabs goods-primary-tabs">
               <li class="tabs__tab-wrap">
-                <button class="tab is-active" role="tab" data-tab-target="goods00">Пластиковые двери</button>
+                <button class="tab <?php if ( !isset( $_GET['id']) ) echo 'is-active'; ?>" role="tab" data-tab-target="goods00">Пластиковые двери</button>
               </li>
               <li class="tabs__tab-wrap">
-                <button class="tab" role="tab" data-tab-target="goods01">Алюминиевые двери</button>
+                <button class="tab <?php if ( $ID == 'aluminum' ) echo 'is-active'; ?>" role="tab" data-tab-target="goods01">Алюминиевые двери</button>
               </li>
               <li class="tabs__tab-wrap">
-                <button class="tab" role="tab" data-tab-target="goods02">Портальные системы</button>
+                <button class="tab <?php if ( $ID == 'portalnye-sistemy' ) echo 'is-active'; ?>" role="tab" data-tab-target="goods02">Портальные системы</button>
               </li>
             </ul>
             <div class="tabs-content goods-primary-tabs-content">
@@ -31,8 +35,12 @@ get_header();
               <?php
               $categories = array( 'plastic', 'aluminum', 'gantry' );
 
-              foreach ($categories as $i => $category) : ?>
-              <div class="tabs-content__wrapper <?php if ($i == 0) echo 'is-active'; ?>"
+              foreach ($categories as $i => $category) :
+                $case1 = $i == 0 && !isset( $_GET['id']);
+                $case2 = $i == 1 && isset( $_GET['id']) && $ID == 'aluminum';
+                $case3 = $i == 2 && isset( $_GET['id']) && $ID == 'portalnye-sistemy';
+              ?>
+              <div class="tabs-content__wrapper <?php if ( $case1 || $case2 || $case3 ) echo 'is-active'; ?>"
                    role="tabpanel"
                    data-tab="goods0<?= $i; ?>"
                    data-tab-group="goods">

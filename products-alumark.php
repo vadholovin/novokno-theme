@@ -187,60 +187,10 @@ get_header();
       endif;
       ?>
 
-      <div class="product-similar">
-        <div class="container">
-          <div class="product-similar__heading">
-            <h2 class="product-similar__title">Похожие товары производителя:</h2>
-            <a href="">Перейти в каталог</a>
-          </div>
-          <div class="grid product-similar__grid">
-            <div class="grid__col grid__col-sm-4 grid__col-6">
-              <div class="goods-tile">
-                <div class="goods-tile__inner">
-                  <a class="goods-tile__picture" href="">
-                    <img src="<?php bloginfo('template_url'); ?>/assets/img/content/product-1.jpg" title="" alt="" />
-                  </a>
-                  <a class="goods-tile__heading" href="" title="GEALAN 8000 IQ 4K Стоимость за окно размером 1300х1400">
-                    <span class="goods-tile__title">GEALAN 8000 IQ 4K</span>
-                    <span class="goods-tile__subtitle">Стоимость за окно размером 1300х1400</span>
-                  </a>
-                  <div class="goods-tile__prices">
-                    <div class="goods-tile__price">
-                      <span class="goods-tile__price-label">Цена:</span>
-                      <span class="goods-tile__price-value">10 100</span>
-                      <span class="goods-tile__price-currency">₽</span>
-                    </div>
-                  </div>
-                  <a class="btn btn--primary btn--block" href="">Рассчитать</a>
-                </div>
-              </div>
-            </div>
-            <div class="grid__col grid__col-sm-4 grid__col-6">
-              <div class="goods-tile">
-                <div class="goods-tile__inner">
-                  <a class="goods-tile__picture" href="">
-                    <img src="<?php bloginfo('template_url'); ?>/assets/img/content/product-1.jpg" title="" alt="" />
-                  </a>
-                  <a class="goods-tile__heading" href="" title="GEALAN 8000 IQ 5K Стоимость за окно размером 1300х1400">
-                    <span class="goods-tile__title">GEALAN 8000 IQ 5K</span>
-                    <span class="goods-tile__subtitle">Стоимость за окно размером 1300х1400</span>
-                  </a>
-                  <div class="goods-tile__prices">
-                    <div class="goods-tile__price">
-                      <span class="goods-tile__price-label">Цена:</span>
-                      <span class="goods-tile__price-value">10 100</span>
-                      <span class="goods-tile__price-currency">₽</span>
-                    </div>
-                  </div>
-                  <a class="btn btn--primary btn--block" href="">Рассчитать</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <?php
+      // Другие категории
+      get_template_part( 'template-parts/related-categories' );
+
       // Общий баннер для заявки на замер
       get_template_part( 'template-parts/banner/banner-application' );
       ?>

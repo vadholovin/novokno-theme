@@ -221,18 +221,24 @@ function novokno_skip_link_focus_fix() {
 add_action( 'wp_print_footer_scripts', 'novokno_skip_link_focus_fix' );
 
 /**
- * Register navigation menus uses wp_nav_menu in five places.
+ * Register Menus
  */
 function novokno_menus() {
 
 	$locations = array(
-		'primary'  => __( 'Меню в шапке', 'novokno' ),
-		'footer'   => __( 'Меню в подвале', 'novokno' ),
+		'header-top'     => __( 'Меню в верхней части шапки', 'novokno' ),
+		'header-bottom'  => __( 'Меню в нижней части шапки', 'novokno' ),
+		'mobile'         => __( 'Мобильное меню', 'novokno' ),
+		'footer-1'       => __( 'Меню в подвале: 1-я колонка', 'novokno' ),
+		'footer-2'       => __( 'Меню в подвале: 2-я колонка', 'novokno' ),
+		'footer-3'       => __( 'Меню в подвале: 3-я колонка', 'novokno' ),
+		'footer-4'       => __( 'Меню в подвале: 4-я колонка', 'novokno' ),
+		'footer-5'       => __( 'Меню в подвале: 5-я колонка', 'novokno' ),
 	);
 
 	register_nav_menus( $locations );
 }
-// add_action( 'init', 'novokno_menus' );
+add_action( 'init', 'novokno_menus' );
 
 
 if ( ! function_exists( 'wp_body_open' ) ) {
@@ -375,7 +381,7 @@ function novokno_register_post_types() {
 		'hierarchical'        => false,
 		'supports'            => array('title','thumbnail', 'editor'), // 'title','editor','author','thumbnail','excerpt','trackbacks','custom-fields','comments','revisions','page-attributes','post-formats'
 		'taxonomies'          => array(),
-		'has_archive'         => false,
+		'has_archive'         => true,
 		'rewrite'             => array('slug' => 'projects', 'with_front' => false ),
 		'query_var'           => true,
   ) );
@@ -744,7 +750,7 @@ function novokno_register_post_types() {
 		'hierarchical'        => true,
 		'supports'            => array( 'title', 'thumbnail' ),
 		'taxonomies'          => array( 'colors' ),
-		'has_archive'         => false,
+		'has_archive'         => true,
 		'rewrite'             => array('slug' => 'limiters', 'with_front' => false ),
 		'query_var'           => true,
   ) );
@@ -1024,34 +1030,33 @@ function be_ajax_load_more() {
   $args = unserialize( stripslashes( $_POST['query'] ) );
 	$args['post_type'] = isset( $args['post_type'] ) ? esc_attr( $args['post_type'] ) : 'post';
 	$args['paged'] = esc_attr( $_POST['page'] ) + 1;
-	$args['post_status'] = 'publish';
+  $args['post_status'] = 'publish';
+  
+  $accessories = array(
+    'jalousie',
+    'closer',
+    'handle',
+    'limiter',
+    'carekit',
+    'air-valve',
+    'windowsill',
+    'roller-blind',
+  );
 
 
   query_posts( $args );
   
   if ( have_posts() ) : while( have_posts() ) : the_post();
 
-      if ( is_home() ) :
-
+      if ( is_home() || $args['post_type'] == 'projects' ) :
         get_template_part( 'template-parts/post/card-article' );
-
       elseif ( $args['post_type'] == 'reviews' ) :
         ?>
         <div class="grid__col grid__col-md-4 grid__col-xs-6">
         <?php get_template_part( 'template-parts/post/review' ); ?>
         </div>
         <?php
-      elseif (
-        $args['post_type'] == 'jalousie' ||
-        $args['post_type'] == 'closer' ||
-        $args['post_type'] == 'handle' ||
-        $args['post_type'] == 'limiter' ||
-        $args['post_type'] == 'carekit' ||
-        $args['post_type'] == 'air-valve' ||
-        $args['post_type'] == 'windowsill' ||
-        $args['post_type'] == 'roller-blind'
-        
-        ) :
+      elseif ( in_array( $args['post_type'], $accessories, true ) ) :
         ?>
         <div class="grid__col grid__col-md-4 grid__col-xs-6">
         <?php get_template_part( 'template-parts/post/card-product' ); ?>
@@ -1070,35 +1075,62 @@ add_action('wp_ajax_nopriv_loadmore', 'be_ajax_load_more');
 /**
  * 
  */
-// add_filter( 'accessory_template', function( $template_path ) {
-
-//   $cpt = array(
-//     'jalousie',
-//     'closer',
-//     'handle',
-//     'limiter',
-//     'carekit',
-//     'air-valve',
-//     'windowsill',
-//     'roller-blind',
-//   );
-
-//   return in_array( get_queried_object()->post_type, $cpt, true )
-//     ? locate_template( array( 'single-accessories.php' ) )
-//     : $template_path;
-// } );
 
 
-add_filter( 'template_include', 'wpsites_cpt_archive_page_template', 99 );
 
 function wpsites_cpt_archive_page_template( $template ) {
 
-    if ( is_post_type_archive( array('jalousie', 'closer', 'handle', 'limiter', 'carekit', 'air-valve', 'windowsill', 'roller-blind') )  ) {
-        $new_template = locate_template( array( 'arch-accessories.php' ) );
-        if ( '' != $new_template ) {
-            return $new_template ;
-        }
-    }
+  if ( is_post_type_archive( array('jalousie', 'closer', 'handle', 'limiter', 'carekit', 'air-valve', 'windowsill', 'roller-blind') )  ) {
+      $new_template = locate_template( array( 'arch-accessories.php' ) );
+      if ( '' != $new_template ) {
+          return $new_template ;
+      }
+  }
 
-    return $template;
+  return $template;
+}
+
+add_filter( 'template_include', 'wpsites_cpt_archive_page_template', 99 );
+
+
+/**
+ * Returns page id by template file name
+ *
+ * @param string $template name of template file including .php
+ */
+// function get_page_id_by_templates( $templates ) {
+
+//   $ids = array();
+
+//   foreach ( $templates as $template ) {
+//     $args = [
+//       'post_type'  => 'page',
+//       'fields'     => 'ids',
+//       'nopaging'   => true,
+//       'meta_key'   => '_wp_page_template',
+//       'meta_value' => $template
+//     ];
+
+//     $pages = get_posts( $args );
+    
+//     foreach ( $pages as $page ) {
+//       array_push($ids, $page);
+//     }
+//   }
+//   return $ids;
+// }
+
+function get_page_id_by_template( $template ) {
+  $args = [
+    'post_type'  => 'page',
+    'fields'     => 'ids',
+    'nopaging'   => true,
+    'meta_key'   => '_wp_page_template',
+    'meta_value' => $template
+  ];
+  $ids = get_posts( $args );
+  
+  foreach ( $ids as $id ) {
+    return $id;
+  }
 }

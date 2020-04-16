@@ -24,22 +24,23 @@ get_header();
                 'paged'          => 1,
               );
 
-              $query = new WP_Query( $args ); ?>
-              <script>
-              var posts_projects = '<?php echo addslashes(json_encode( $query->query_vars )); ?>',
-                  current_page_projects = <?php echo $query->query_vars['paged']; ?>,
-                  max_page_projects = <?php echo $query->max_num_pages; ?>;
-              </script>
-              <?php
-              if ($query->have_posts()) : while($query->have_posts()) : $query->the_post(); ?>
-                <?php get_template_part( 'template-parts/post/card-article' ); ?>
-              <?php endwhile; endif; ?>
+              $query = new WP_Query( $args );
+              
+              if ($query->have_posts()) : while($query->have_posts()) : $query->the_post();
+                get_template_part( 'template-parts/post/card-article' );
+              endwhile; endif; ?>
 
                 <div class="btn__container grid__col-12">
                 <?php
-                if ( $query->max_num_pages > 1 ) : ?>
-                  <button class="btn btn--wider js-more-projects">Загрузить еще</button>
-                <?php endif; wp_reset_postdata(); ?>
+                if (  $query->max_num_pages > 1 ) : ?>
+                  
+                  <button class="btn btn--wider js-more-posts"
+                          data-current="1"
+                          data-ajax-posts='<?php echo serialize( $query->query_vars ); ?>'
+                          data-max-pages='<?php echo $query->max_num_pages; ?>'>
+                    Загрузить еще
+                  </button>
+                <?php endif; ?>
                 </div>
               </div>
             </div>

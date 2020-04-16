@@ -33,58 +33,19 @@
         
       </div>
       <div class="mobile-nav__body">
-        <ul class="mobile-menu">
-          <li class="mobile-menu-item">
-            <a href="">О компании</a>
-          </li>
-          <li class="mobile-menu-item">
-            <a href="">Клиентам</a>
-          </li>
-          <li class="mobile-menu-item">
-            <a href="">Контакты</a>
-          </li>
-          <li class="mobile-menu-item dropdown">
-            <a href="">Окна</a>
-            <ul class="mobile-submenu">
-              <li class="mobile-submenu-item">
-                <a href="">Окна в квартиру</a>
-              </li>
-              <li class="mobile-submenu-item">
-                <a href="">Окна в дом</a>
-              </li>
-              <li class="mobile-submenu-item">
-                <a href="">Окна на дачу</a>
-              </li>
-            </ul>
-          </li>
-          <li class="mobile-menu-item dropdown">
-            <a href="">Двери</a>
-            <ul class="mobile-submenu">
-              <li class="mobile-submenu-item">
-                <a href="">Двери в квартиру</a>
-              </li>
-              <li class="mobile-submenu-item">
-                <a href="">Двери в дом</a>
-              </li>
-              <li class="mobile-submenu-item">
-                <a href="">Двери на дачу</a>
-              </li>
-            </ul>
-          </li>
-          <li class="mobile-menu-item">
-            <a href="">Балконы и лоджии</a>
-          </li>
-          <li class="mobile-menu-item">
-            <a href="">Услуги</a>
-          </li>
-          <li class="mobile-menu-item">
-            <a href="">Портфолио</a>
-          </li>
-          <li class="mobile-menu-item">
-            <a href="">Аксессуары</a>
-          </li>
-        </ul>
         <?php
+        $args = array(
+          'menu_class'        => 'mobile-menu',
+          'container'         => null,
+          'theme_location'    => 'mobile',
+        );
+
+        wp_nav_menu($args);
+        ?>
+
+        <?php
+        $header_phone = get_field('header_phone', 'option');
+        
         if( $header_phone ): ?>
           <div class="mobile-contact">
             <a class="mobile-contact__link"
